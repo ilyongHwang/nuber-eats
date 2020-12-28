@@ -59,3 +59,10 @@ The Backend of Nuber Eats Clone
      ```ts
      @Args() createRestaurantDto: CreateRestaurantDto,
      ```
+6. Validating ArgsTypes
+   - dto에 class validators를 사용할 수 있다.
+   - Validator-Pipe를 설정해줍시다.
+     ```ts
+     // main.ts
+     app.useGlobalPipes(new ValidationPipe());
+     ```
