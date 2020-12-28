@@ -48,6 +48,14 @@ The Backend of Nuber Eats Clone
 3. ObjectType
    - Entity Modeling이랑 비슷하다.
 4. Arguments
-   - GraphQl에 Query를 줄때 Argument를 줄 수 있다. `@Args('찾을string') variable: Type`
-5. Mutation
    - query를 살펴봅시다.
+   - GraphQl에 Query를 줄때 Argument를 줄 수 있다. `@Args('찾을string') variable: Type`
+5. InputTypes and ArgumentTypes
+   - `inputTypes` : argument를 따로 주는게 아니라 `object`를 넘겨 줄 수 있다. === DTO 같다.
+     ```ts
+     @Args('createRestaurantInput') createRestaurantInput: createRestaurantDto,
+     ```
+   - `ArgumentTypes` : 밑의 field를 분리된 argument로써 정의할 수 있게 해준다.
+     ```ts
+     @Args() createRestaurantDto: CreateRestaurantDto,
+     ```
