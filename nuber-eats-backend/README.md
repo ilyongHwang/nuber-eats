@@ -46,3 +46,8 @@ The Backend of Nuber Eats Clone
    > 추가하면 됩니다.
 
 3. ObjectType
+   - Entity Modeling이랑 비슷하다.
+4. Arguments
+   - GraphQl에 Query를 줄때 Argument를 줄 수 있다. `@Args('찾을string') variable: Type`
+5. Mutation
+   - query를 살펴봅시다.
