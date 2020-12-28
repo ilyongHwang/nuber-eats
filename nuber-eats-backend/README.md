@@ -16,6 +16,7 @@ The Backend of Nuber Eats Clone
      - appModule 은 `main.ts`로 import되는 유일한 모듈
    - db, graphql 을 추가할 거야
 2. our first resolver
+
    - graphQL은 Apollo Server를 기반으로 동작한다.
    - **정의**
      - `typeDefs` : document 혹은 너의 서버의 schema를 표현하는 것
@@ -30,16 +31,18 @@ The Backend of Nuber Eats Clone
      4. `@Query(() => Boolean)`: Query에서 무엇을 return 할 것인지 알려줘야함
      5. `localhost:3000/graphql` 접속 하면 작동 확인 가능
 
-> prettier가 작동안되면?
->
-> ```
->  // settings.json
->  "[typescript]": {
->     "editor.defaultFormatter": "esbenp.prettier-vscode"
->   },
->   "[typescriptreact]": {
->     "editor.defaultFormatter": "esbenp.prettier-vscode"
->   },
-> ```
->
-> 추가하면 됩니다.
+   > prettier가 작동안되면?
+   >
+   > ```
+   >  // settings.json
+   >  "[typescript]": {
+   >     "editor.defaultFormatter": "esbenp.prettier-vscode"
+   >   },
+   >   "[typescriptreact]": {
+   >     "editor.defaultFormatter": "esbenp.prettier-vscode"
+   >   },
+   > ```
+   >
+   > 추가하면 됩니다.
+
+3. ObjectType
