@@ -66,3 +66,36 @@ The Backend of Nuber Eats Clone
      // main.ts
      app.useGlobalPipes(new ValidationPipe());
      ```
+
+## 2. Database Configuration
+1. TypeORM and PostgreSQL
+   - TypeORM 은 TypeScript를 사용하여 NestJS와 친근하다.
+   - `$ npm i @nestjs/typeorm typeorm pg`
+   - `pg`는 postgreSQL
+2. TypeORM Setup
+   ```ts
+   // app.module.ts
+   TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: 'qweasd123',
+      database: 'nuber-eats',
+      synchronize: true, // type orm이 DB에 연결할때,데이터베이스르 ㄹ너의 모듈의 현재 상태로 마이그레이션한다는 뜻 ,
+      logging: true, // console.log 로 출력 
+    }),
+   ```
+3. Introducing ConfigService
+   -  NestJS 는 dotenv 대신 configuration module을 사용합니다.
+   - dotenv의 최상위에서 실행됩니다. (dotenv 내부에서도 실행이 됩니다.)
+   ```ts
+   // app.module.ts
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: ".env",
+    }),
+   ```
+   - Command에 따라 환경변수 설정 변경
+   - `npm i cross-env` : mac이든 windows든 상관 없이 환경 변수를 설정해줍니다.
+   - `package.json` 변경
