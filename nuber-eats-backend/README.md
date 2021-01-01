@@ -133,3 +133,26 @@ The Backend of Nuber Eats Clone
       DB_NAME: Joi.string().valid(),
     })
    ```
+## 3. TypeORM and NestJS
+1. Our First Entity
+   - `Entity` : 데이터베이스에 저장되는 데이터의 형태를 보여주는 모델 
+   - GraphQL에 있는 모든 것들을 지울 필요 가 없습니다.
+   - decorator와 typescript 의 장점
+   - `@ObjectType()` : 자동으로 스키마를 빌드하기 위해 사용하는 GraphQL Decorator
+   - `@Entity()` : TypeORM이 DB에 정의된 entity를 저장하게 해준다.
+   - TypeORM이 Entity가 어디에 저장되어있는지 알려주어야 합니다.
+2. Data Mapper vs Active Record
+   - Repsitory란
+     - Active Record & Data Mapper
+       - DB랑 상호작용할때 쓰는 패턴
+       - Active Record(Ruby On Rails & Python Django)
+         - 인간미 있다 (사용자가 읽기 쉬움)
+         - Entiy를 `export class User extends BaseEntity {}` 해주어야한다.
+         - 접근하기위해 User라는 객체로 부터 시작.
+         - 쉽고 작은 어플리케이션에서 사용합니다.
+       - Data Mapper(NestJS)
+         - User에 접근하기 위해 Repository라는걸 사용한다.
+         - `Repository`: Entity랑 상호작용하는걸 담당
+         - 접근하기위해 UserRepository라는 객체로 부터 시작.
+         - 유지관리하는걸 도와주고 대규모 앱에 어울림.
+         - InJect()를 사용하여 Repository를 사용하기가 더 쉽고, Test에도 Inject하여 사용하기 용이하다.
