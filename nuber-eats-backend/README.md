@@ -115,4 +115,21 @@ The Backend of Nuber Eats Clone
           expandVariables?: boolean;
       }
      ```
-   - 
+4. Validating ConfigService
+   - `joi`: 자바스크립트용 가장 강력한 스키마 설명 언어 이자, 데이터 유효성 검사 툴입니다.
+   - 환경 변수의 유효성을 검사할 꺼입니다.
+   - `npm i joi`
+      - js로 된 module은 import하는 방식이 다름
+      ```ts
+      import * as Joi from 'joi';
+      ```
+   ```ts
+    validationSchema: Joi.object({
+      NODE_ENV: Joi.string().valid('dev', 'prod').required(),
+      DB_HOST: Joi.string().valid(),
+      DB_PORT: Joi.string().valid(),
+      DB_USERNAME: Joi.string().valid(),
+      DB_PASSWORD: Joi.string().valid(),
+      DB_NAME: Joi.string().valid(),
+    })
+   ```
