@@ -99,3 +99,20 @@ The Backend of Nuber Eats Clone
    - Command에 따라 환경변수 설정 변경
    - `npm i cross-env` : mac이든 windows든 상관 없이 환경 변수를 설정해줍니다.
    - `package.json` 변경
+   - ```ts
+     // config-module-options
+     export interface ConfigModuleOptions {
+          cache?: boolean;
+          isGlobal?: boolean;
+          ignoreEnvFile?: boolean;
+          ignoreEnvVars?: boolean;
+          envFilePath?: string | string[];
+          encoding?: string;
+          validate?: (config: Record<string, any>) => Record<string, any>;
+          validationSchema?: any; // 원하는 모든 환경 변수의 유효성을 검사할 수 있음
+          validationOptions?: Record<string, any>;
+          load?: Array<ConfigFactory>;
+          expandVariables?: boolean;
+      }
+     ```
+   - 
