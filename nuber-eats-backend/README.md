@@ -196,3 +196,22 @@ The Backend of Nuber Eats Clone
         - base class에서 class를 만드는데 몇몇 field를 제외하고 만드는 것.
      4. Intersection()
         - 두 input을 합쳐주는 역할 
+
+7. Optinal Types and Columns
+   ```ts
+   // restaurants.entity.ts
+   {
+     ...
+
+     @Field(type => Boolean, {
+       defaultValue: true,
+     }) // graphql field
+     @Column({ default: true }) // typeorm field
+     @IsBoolean() // validation field
+     @IsOptional() // falidation field
+     isVegan: boolean;
+     
+     ... 
+   }
+   ```
+   - 

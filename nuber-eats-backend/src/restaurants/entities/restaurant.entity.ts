@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { IsBoolean, IsString, Length } from 'class-validator';
+import { IsBoolean, IsOptional, IsString, Length } from 'class-validator';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 // 이 entity를 가상화하여 다른 곳에서도 쓸 것이라는 의미.
@@ -17,23 +17,18 @@ export class Restaurant {
   @Length(5)
   name: string;
 
-  @Field(type => Boolean)
-  @Column()
-  @IsBoolean()
+  @Field(type => Boolean, {
+    nullable: true,
+  }) // graphql field
+  @Column({ default: true }) // typeorm field
+  @IsBoolean() // validation field
+  @IsOptional() // falidation field
   isVegan: boolean;
 
-  @Field(type => String)
+  @Field(type => String, {
+    defaultValue: '강남'
+  })
   @Column()
   @IsString()
   address: string;
-
-  @Field(type => String)
-  @Column()
-  @IsString()
-  ownerName: string;
-
-  @Field(type => String)
-  @Column()
-  @IsString()
-  categoryName: string;
 }

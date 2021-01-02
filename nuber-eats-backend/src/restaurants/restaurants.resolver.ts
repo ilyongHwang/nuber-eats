@@ -1,3 +1,4 @@
+import { Logger } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
 import { CreateRestaurantDto } from './dtos/create-restaurant.dto';
 import { Restaurant } from './entities/restaurant.entity';
@@ -5,6 +6,8 @@ import { RestaurantService } from './restaurants.service';
 
 @Resolver(of => Restaurant)
 export class RestaurantResolver {
+  private static readonly logger = new Logger(RestaurantResolver.name);
+
   constructor(private readonly restaurantService: RestaurantService) { }
 
   @Query(returns => [Restaurant] /* graphQl 표기 */) // === (returns => boolean)
@@ -17,6 +20,7 @@ export class RestaurantResolver {
     // @Args('createRestaurantInput') createRestaurantInput: createRestaurantDto,
     @Args('input') createRestaurantDto: CreateRestaurantDto,
   ): Promise<boolean> {
+    RestaurantResolver.logger.debug(createRestaurantDto);
     try {
       await this.restaurantService.createRestaurant(createRestaurantDto);
       return true;
