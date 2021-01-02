@@ -156,3 +156,5 @@ The Backend of Nuber Eats Clone
          - 접근하기위해 UserRepository라는 객체로 부터 시작.
          - 유지관리하는걸 도와주고 대규모 앱에 어울림.
          - InJect()를 사용하여 Repository를 사용하기가 더 쉽고, Test에도 Inject하여 사용하기 용이하다.
+2. Injecting the Repository
+   - 

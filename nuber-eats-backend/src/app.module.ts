@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
+import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 
 @Module({
@@ -29,7 +30,8 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod', // type orm이 DB에 연결할때,데이터베이스르 ㄹ너의 모듈의 현재 상태로 마이그레이션한다는 뜻 ,
-      logging: true, // console.log 로 출력 
+      logging: true, // console.log 로 출력
+      entities: [Restaurant],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true, // join(process.cwd(), 'src/schema.gql'),

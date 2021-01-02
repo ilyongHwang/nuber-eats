@@ -1,8 +1,8 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
-@ObjectType()
 @Entity()
+@ObjectType()
 export class Restaurant {
   @PrimaryGeneratedColumn('increment')
   @Field(type => Number)
