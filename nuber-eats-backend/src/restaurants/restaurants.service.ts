@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
+import { CreateRestaurantDto } from "./dtos/create-restaurant.dto";
 import { Restaurant } from "./entities/restaurant.entity";
 
 @Injectable()
@@ -14,4 +15,8 @@ export class RestaurantService {
     return this.restaurants.find();
   }
 
+  createRestaurant(createRestaurantDto: CreateRestaurantDto) {
+    const newRestaurant = new Restaurant();
+    return this.restaurants.save(newRestaurant);
+  }
 }

@@ -181,4 +181,18 @@ The Backend of Nuber Eats Clone
    - TypeORM을 사용하여 DB에 model을 생성하고 자동으로 graphQL에 스키마를 작성할 수 있음
    - graphQL query를 사용할 수 있는 resolver도 사용할 수 있음.
      - 이는 service에 연결되고 이 service가 DB에 접근함.
-   - 
+4. CreateRestaurants
+   - `save` / `create`
+
+6. Mapped Types
+   - Entity사 바뀔때마다 DTO를 바꾸기가 번거롭쥬?
+   - Entity 파일을 Dto로도 사용할 수 있습니다.
+   - Mapped Types는 base type을 바탕으로 다른 버전들을 만들 수 있음.
+     1. PartialType()
+        - base type, base class를 가져다가 export하고 이 모든 field가 required가 아닌 class를 만들어줌.
+     2. PicType()
+        - input type에서 몇 가지 property를 선택해 새로운 class 를 만들어줍니다.
+     3. OmitType()
+        - base class에서 class를 만드는데 몇몇 field를 제외하고 만드는 것.
+     4. Intersection()
+        - 두 input을 합쳐주는 역할 
