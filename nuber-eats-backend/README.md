@@ -157,4 +157,28 @@ The Backend of Nuber Eats Clone
          - 유지관리하는걸 도와주고 대규모 앱에 어울림.
          - InJect()를 사용하여 Repository를 사용하기가 더 쉽고, Test에도 Inject하여 사용하기 용이하다.
 2. Injecting the Repository
+   ```ts
+   // restaurants.service.ts
+   constructor(
+     @InjectRepository(Restaurant)
+     private readonly restaurants: Repository<Restaurant>
+   )
+   getAll: Promise<Restaurant[]> {
+     return this.restaurants.find();
+   }
+   
+   // restaurants.module.ts
+   imports: [TypeOrmModule.forfeature([Restaurant])],
+
+   // app.module.ts
+   TypeOrmModule.forRoot({
+     ...
+     entities: [Restaurant],
+   })
+   ```
+
+3. Recap
+   - TypeORM을 사용하여 DB에 model을 생성하고 자동으로 graphQL에 스키마를 작성할 수 있음
+   - graphQL query를 사용할 수 있는 resolver도 사용할 수 있음.
+     - 이는 service에 연결되고 이 service가 DB에 접근함.
    - 
