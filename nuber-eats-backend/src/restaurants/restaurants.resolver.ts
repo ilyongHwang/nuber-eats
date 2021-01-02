@@ -39,6 +39,13 @@ export class RestaurantResolver {
     @Args('data') data: UpdateRestaurantDto,
     */
   ): Promise<boolean> {
-    return true;
+    RestaurantResolver.logger.debug(updateRestaurantDto);
+    try {
+      await this.restaurantService.updateRestaurant(updateRestaurantDto);
+      return true;
+    } catch (err) {
+      console.log(err);
+      return false;
+    }
   }
 }

@@ -214,4 +214,45 @@ The Backend of Nuber Eats Clone
      ... 
    }
    ```
-   - 
+
+8. Update Restaurant part one
+    - make mutation update
+    - `update dto`
+      - `updateInputType`을 정의하고 `UpdateDto`에 포함하여 선언
+    - `update query`
+      ```ts
+      updateRestaurant({ id, data }: UpdateRestaurantDto) {
+        return this.restaurants.update(id, { ...data })
+      }
+      ```
+    - `resolver`
+      ```ts
+        @Mutation(returns => Boolean)
+        async updateRestaurant(
+          @Args('input') updateRestaurantDto: UpdateRestaurantDto
+          /*
+          @Args('id') id: number,
+          @Args('data') data: UpdateRestaurantDto,
+          */
+        ): Promise<boolean> { 
+          RestaurantResolver.logger.debug(updateRestaurantDto);
+          try {
+            await this.restaurantService.updateRestaurant(updateRestaurantDto);
+            return true;
+          } catch (err) {
+            console.log(err);
+            return false;
+          }
+        }
+      ```
+    - `graphQL`
+      ```ts
+      mutation {
+        updateRestaurant(input: {
+          id: 4,
+          data: {
+          address: "수정 주소"
+            }
+        })
+      }
+      ```
