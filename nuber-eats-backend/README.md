@@ -258,35 +258,44 @@ The Backend of Nuber Eats Clone
       ```
 
 ## 4. User C/R/U/D
-0. Todo List
+1. TODO List
+   ```md
    1. CRUD - `account` 를 만든다.
    2. password를 hash 하는 방법
    3. password를 검증하는 방법
    4. authentication / authorizaiton - guards, middelwares, metadata
    5. customize decorators
    6. testing - unit test / e2e testing
+   ```
+   1. User Model
+      - [ ] id
+      - [ ] createdAt
+      - [ ] updatedAt
 
-1. User Model
-   1. User Entity
-      - `role` : type으로 지정해준다.
-      - `common` module : 기본적으로 공유되는 모든 것을 적용
-   2. TODO List
-      1. User Model
-         - [ ] id
-         - [ ] createdAt
-         - [ ] updatedAt
+      - [ ] email
+      - [ ] password
+      - [ ] role(client|owner|delivery)
 
-         - [ ] email
-         - [ ] password
-         - [ ] role(client|owner|delivery)
+   2. User CRUD:
 
-      2. User CRUD:
+      - [ ] Create Account
+      - [ ] Log In
+      - [ ] See Profile
+      - [ ] Edit Profile
+      - [ ] Verify Email
 
-         - [ ] Create Account
-         - [ ] Log In
-         - [ ] See Profile
-         - [ ] Edit Profile
-         - [ ] Verify Email
+2. GraphQL create mutation query
+  ```graphql
+  mutation {
+    createAccount(input: {
+      email: "1yongs_@naver.com",
+      password: "1234",
+      role: Client
+    }) {
+      ok
+      error
+    }
+  }
+  ```
 
-2. Create Account Mutation
-   - 
+3. 
