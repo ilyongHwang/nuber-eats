@@ -287,3 +287,6 @@ The Backend of Nuber Eats Clone
          - [ ] See Profile
          - [ ] Edit Profile
          - [ ] Verify Email
+
+2. Create Account Mutation
+   - 
