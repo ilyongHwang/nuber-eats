@@ -298,4 +298,13 @@ The Backend of Nuber Eats Clone
   }
   ```
 
-3. 
+3. TypeORM - listeners
+   - 기본적으로 너의 entity에 무슨 일이 생길 때 이벤트가 발생되고 실행되는 함수
+   - `@AfterLoad()`
+   - `@BeforeInsert()` : typeORM이 entity 가 insert되기 전에 이함수를 불러줄 것 입니다.
+
+4. Hashing Module : `bcrypt`
+   - `npm i bcrypt`
+   - `bcrypt.hash(password, saltOrRounds)` : saltOrRounds 는 관련 유튭 비디오를 니꼬가 만듬
+     - rounds
+5. 
