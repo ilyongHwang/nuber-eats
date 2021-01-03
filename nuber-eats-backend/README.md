@@ -270,4 +270,20 @@ The Backend of Nuber Eats Clone
    1. User Entity
       - `role` : type으로 지정해준다.
       - `common` module : 기본적으로 공유되는 모든 것을 적용
-   2. 
+   2. TODO List
+      1. User Model
+         - [ ] id
+         - [ ] createdAt
+         - [ ] updatedAt
+
+         - [ ] email
+         - [ ] password
+         - [ ] role(client|owner|delivery)
+
+      2. User CRUD:
+
+         - [ ] Create Account
+         - [ ] Log In
+         - [ ] See Profile
+         - [ ] Edit Profile
+         - [ ] Verify Email
