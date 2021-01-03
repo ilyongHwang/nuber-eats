@@ -256,3 +256,18 @@ The Backend of Nuber Eats Clone
         })
       }
       ```
+
+## 4. User C/R/U/D
+0. Todo List
+   1. CRUD - `account` 를 만든다.
+   2. password를 hash 하는 방법
+   3. password를 검증하는 방법
+   4. authentication / authorizaiton - guards, middelwares, metadata
+   5. customize decorators
+   6. testing - unit test / e2e testing
+
+1. User Model
+   1. User Entity
+      - `role` : type으로 지정해준다.
+      - `common` module : 기본적으로 공유되는 모든 것을 적용
+   2. 

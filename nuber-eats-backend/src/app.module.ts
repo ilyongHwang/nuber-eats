@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { RestaurantsModule } from './restaurants/restaurants.module';
+import { User } from './users/entities/user.entity';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -31,11 +33,12 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod', // type orm이 DB에 연결할때,데이터베이스르 ㄹ너의 모듈의 현재 상태로 마이그레이션한다는 뜻 ,
       logging: process.env.NODE_ENV !== 'prod', // console.log 로 출력
-      entities: [Restaurant],
+      entities: [Restaurant, User],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true, // join(process.cwd(), 'src/schema.gql'),
     }),
+    UsersModule,
   ],
   controllers: [],
   providers: [],
