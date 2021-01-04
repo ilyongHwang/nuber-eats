@@ -344,3 +344,15 @@ The Backend of Nuber Eats Clone
       `method(req: Request, res: Response, next: NextFunction) { ...; next();}`
    2. function
    3. bootstrap `use()`
+
+6. JWT Middleware
+   - dj..
+   - 
+7. GraphQL Context (Authentication part)
+   1. decode된 token이 담긴 request는 HTTP request 같은건데 이걸 graphql resolver에 전달해줘야함
+      1. graphql Module에 apollo server를 모든걸 가져왔다는걸 생각해내야함
+      2. request context는 각 request에서 사용이 가능하다.
+         1. context가 함수로 정의되면 매 request 발생.
+         2. 이것은 req propety를 포함한 object를 Express로부터 받는다.
+         3. context 데이터 바구니 같은거
+   2. 
