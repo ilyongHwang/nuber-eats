@@ -357,4 +357,13 @@ The Backend of Nuber Eats Clone
          3. context 데이터 바구니 같은거
 8. AuthGuard
    1. guard 만들어서 `@UserGaurds()`에 넣어줌.
-   2. 
+
+9. Recap
+   1. header에 token을 보내
+   2. token을 decrypt, verify하는 middleware를 거쳐 request object에 user를 추가 
+   3. request object가 graphql context 안으로 들어가시고
+   4. Guard가 graphql context를 찾아
+   5. user가 있는지 없는지에 따라 true, false를 return 할껴
+   6. 마지막에 guard에 의해 request가 authorize되면
+   7. resolver에 decorator가 필요해, decorator는 graphql context에서 찾은 user와 같은 user를 찾으려고 할껴
+   8. 
