@@ -339,4 +339,6 @@ The Backend of Nuber Eats Clone
         useClass: JwtService,
       }]
       ```
-      
+4. Middlewares in NestJS 
+   1. `method(req: Request, res: Response, next: NextFunction) { ...; next();}`
+   2. appModule {}

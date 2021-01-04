@@ -35,4 +35,9 @@ export class UserResolver {
       return
     }
   }
+
+  @Query(returns => User)
+  me() {
+    return
+  }
 }
