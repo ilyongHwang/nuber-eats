@@ -1,7 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
 import { InjectRepository } from "@nestjs/typeorm";
-import { sign } from "jsonwebtoken";
 import { JwtService } from "src/jwt/jwt.service";
 import { Repository } from "typeorm";
 
@@ -14,11 +12,8 @@ export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly users: Repository<User>,
-    private readonly config: ConfigService,
     private readonly jwtService: JwtService,
-  ) {
-    console.log(jwtService.hello());
-  }
+  ) { }
 
   async createAccount({ email, password, role }: CreateAccountInput): Promise<{ ok: boolean, error?: string }> {
     try {
@@ -59,7 +54,7 @@ export class UserService {
       }
 
       // 3. make a JWT and give it to the user
-      const token = sign({ id: user.id }, this.config.get<string>('SECRET_KEY'));
+      const token = this.jwtService.sign(user.id);
       return {
         ok: true,
         token,
