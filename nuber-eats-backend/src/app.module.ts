@@ -7,6 +7,7 @@ import { Restaurant } from './restaurants/entities/restaurant.entity';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
+import { JwtModule } from './jwt/jwt.module';
 
 @Module({
   imports: [
@@ -39,6 +40,7 @@ import { UsersModule } from './users/users.module';
       autoSchemaFile: true, // join(process.cwd(), 'src/schema.gql'),
     }),
     UsersModule,
+    JwtModule,
   ],
   controllers: [],
   providers: [],
