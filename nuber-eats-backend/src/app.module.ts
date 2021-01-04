@@ -8,7 +8,7 @@ import { RestaurantsModule } from './restaurants/restaurants.module';
 import { User } from './users/entities/user.entity';
 import { UsersModule } from './users/users.module';
 import { JwtModule } from './jwt/jwt.module';
-import { jwtMiddleware, /* JwtMiddleware */ } from './jwt/jwt.middleware';
+import { /*jwtMiddleware, */ JwtMiddleware } from './jwt/jwt.middleware';
 
 @Module({
   imports: [
@@ -52,7 +52,7 @@ import { jwtMiddleware, /* JwtMiddleware */ } from './jwt/jwt.middleware';
 export class AppModule implements NestModule {
   // 2. Function Middleware
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(jwtMiddleware).forRoutes({
+    consumer.apply(JwtMiddleware).forRoutes({
       path: '/graphql',
       method: RequestMethod.ALL,
     })

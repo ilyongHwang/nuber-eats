@@ -32,12 +32,13 @@ export class UserResolver {
     try {
       return this.userService.login(loginInput);
     } catch (error) {
-      return
+      return {
+        ok: false,
+        error,
+      }
     }
   }
 
   @Query(returns => User)
-  me() {
-    return
-  }
+  me() { }
 }

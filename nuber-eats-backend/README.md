@@ -340,5 +340,7 @@ The Backend of Nuber Eats Clone
       }]
       ```
 4. Middlewares in NestJS 
-   1. `method(req: Request, res: Response, next: NextFunction) { ...; next();}`
-   2. appModule {}
+   1. class
+      `method(req: Request, res: Response, next: NextFunction) { ...; next();}`
+   2. function
+   3. bootstrap `use()`
