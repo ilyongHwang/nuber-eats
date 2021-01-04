@@ -307,4 +307,8 @@ The Backend of Nuber Eats Clone
    - `npm i bcrypt`
    - `bcrypt.hash(password, saltOrRounds)` : saltOrRounds 는 관련 유튭 비디오를 니꼬가 만듬
      - rounds
-5. 
+  
+## 5. User Authentication
+1. TODO List
+   1. [ ] 수작업으로 authentication module 만들기
+2. 
