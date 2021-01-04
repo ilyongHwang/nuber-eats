@@ -22,6 +22,7 @@ import { JwtModule } from './jwt/jwt.module';
         DB_USERNAME: Joi.string().valid(),
         DB_PASSWORD: Joi.string().valid(),
         DB_NAME: Joi.string().valid(),
+        PRIVATE_KEY: Joi.string().required(),
       })
     }),
     RestaurantsModule, // forroot: root module을 정이ㅡ
@@ -40,7 +41,9 @@ import { JwtModule } from './jwt/jwt.module';
       autoSchemaFile: true, // join(process.cwd(), 'src/schema.gql'),
     }),
     UsersModule,
-    JwtModule.forRoot(),
+    JwtModule.forRoot({
+      privateKey: process.env.PRIVATE_KEY
+    }),
   ],
   controllers: [],
   providers: [],

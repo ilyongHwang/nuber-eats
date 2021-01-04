@@ -321,6 +321,22 @@ The Backend of Nuber Eats Clone
    2. Module 종류에는 두가지가 존재
       1. static module (`UserModule`)
       2. Dynamic Module 설정이 적용되는 모듈 (`~~Module.forRoot`)
-3. JWT Module part One
+3. JWT Module
    1. JWTModule에 static 함수를 만들기
       1. [] `static method(): DynamicModule { ... }`
+      2. jwtModule에 `@Global()` decorator를 달아줌으로써 Global Module로 부착
+   2. Global Module vs Non-Global Moudle
+      1. `jwt.interfaces.ts` 파일 생성
+      2. `jwt.constants.ts` 파일 생성
+   3. Module Depedency injection
+      ```ts
+      // moudle.ts
+      providers: [JwtService]
+
+      // same as
+      providers: [{
+        provide: JwtService,
+        useClass: JwtService,
+      }]
+      ```
+      
