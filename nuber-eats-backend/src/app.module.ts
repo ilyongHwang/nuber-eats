@@ -40,7 +40,7 @@ import { JwtModule } from './jwt/jwt.module';
       autoSchemaFile: true, // join(process.cwd(), 'src/schema.gql'),
     }),
     UsersModule,
-    JwtModule,
+    JwtModule.forRoot(),
   ],
   controllers: [],
   providers: [],

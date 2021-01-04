@@ -309,6 +309,18 @@ The Backend of Nuber Eats Clone
      - rounds
   
 ## 5. User Authentication
-1. TODO List
+0. TODO List
    1. [ ] 수작업으로 authentication module 만들기
-2. 
+1. Generating JWT
+   1. install `jsonwebtoken`, `@types/jsonwebtoken --dev-only`
+   2. module modify 
+      1. add secret key 
+   3. token generate
+2. JWT and Modules
+   1. JWT: json web token을 이용해서 우리만이 유효한 인증을 할 수 있게 하는 것이 중요, 내부에 담겨진 정보 자체가 아닌, 정보의 진위 여부가 중요하다는 것.
+   2. Module 종류에는 두가지가 존재
+      1. static module (`UserModule`)
+      2. Dynamic Module 설정이 적용되는 모듈 (`~~Module.forRoot`)
+3. JWT Module part One
+   1. JWTModule에 static 함수를 만들기
+      1. [] `static method(): DynamicModule { ... }`
