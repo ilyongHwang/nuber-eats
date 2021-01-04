@@ -355,4 +355,6 @@ The Backend of Nuber Eats Clone
          1. context가 함수로 정의되면 매 request 발생.
          2. 이것은 req propety를 포함한 object를 Express로부터 받는다.
          3. context 데이터 바구니 같은거
+8. AuthGuard
+   1. guard 만들어서 `@UserGaurds()`에 넣어줌.
    2. 
