@@ -69,12 +69,15 @@ export class UserService {
     return this.users.findOne({ id });
   }
 
-  async editProfile(userId: number, editProfileInput: EditProfileInput) {
+  async editProfile(userId: number, { email, password }: EditProfileInput) {
     // return this.users.update({ id: userId }, { ...editProfileInput });
     // user.entity.ts의 beforeUpdate() Hook을 걸지 못한다. 왜?~! 그저 db에  query만 보내기때문
     const user = await this.users.findOne(userId);
 
+    if (email) user.email = email;
+    if (password) user.password = password;
 
-    return this.users.save({ ...user, ...editProfileInput });
+
+    return this.users.save(user);
   }
 }
