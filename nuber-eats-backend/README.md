@@ -397,3 +397,18 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - NestJS에는 mailer module가 있어요. `@nestjs-modules/mailer`
    - 우린 직접 만들어 볼 꺼에오. `nest g mo mail`
    - `mail.module.ts` 랑 `app.module.ts`의 `MailModule.forRoot({...})` 처리
+
+- 6.7 Mailgun API
+   - 요즘은 `request` package가 deprecated 되고 `GOT`를 사용한답니다... `npm i got`
+   - curl 형식으로 보내야하는데
+      - `--user` 은 `Basic Authorization` headers임.
+      - `api:APIKEY` 얘는 key:value 키쌍인데, `base64`로 보내야함.
+      - `Buffer.from('api:YOUR_API_KEY').toString('base64')`
+      - `-F`: form인데 우린 `form-data`을 설치해서 사용할꺼임.
+
+
+
+- 6.8 Beautiful Emails
+   - mailGun Template을 씁시다.
+   - Sending > Templates > alert Template 선택
+   - Email Template은 `handlebars` 뷰엔진을 씁니다...~~더럽고 추악한...~~
