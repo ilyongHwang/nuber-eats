@@ -13,14 +13,16 @@ export class MailService {
     this.sendEmail('testing', 'test').then(() => console.log(`success`)).catch(err => console.log(err.response));
   } // NestJS가 시작할 때 마다 이 함수를 테스트 하는 거얌!
 
-  private async sendEmail(subject: string, content: string) {
+  private async sendEmail(subject: string, template: string) {
     //to도 넣을 수 있는데, credit 카드 등록이 필요함 ㅠㅠ
     const form = new FormData();
     form.append('from', `Excited User <mailgun@${this.options.domain}>`);
-    form.append('to', `${this.options.fromEmail}@${this.options.domain}`);
+    // form.append('to', `${this.options.fromEmail}@${this.options.domain}`);
     form.append('to', `${this.options.fromEmail}`);
     form.append('subject', subject);
-    form.append('text', content);
+    form.append('template', template);
+    form.append('v:code', 'asdasdasdsa');
+    form.append('v:username', 'nico!!');
 
     const response = await got(
       `https://api.mailgun.net/v3/${this.options.domain}/messages`,
