@@ -392,4 +392,8 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - `sandbox domain` : 니가 이 도메인으로 메일을 보내는거야.
    - `API Keys`: Public Api Key
    - credit Card등록 안햇으면 `Authorized Recipients`에 등록된 5개의 계정에만 mailgun 서비스를 이용할 수 있어.
-   
+
+- 6.6 Mail Module Setup
+   - NestJS에는 mailer module가 있어요. `@nestjs-modules/mailer`
+   - 우린 직접 만들어 볼 꺼에오. `nest g mo mail`
+   - `mail.module.ts` 랑 `app.module.ts`의 `MailModule.forRoot({...})` 처리
