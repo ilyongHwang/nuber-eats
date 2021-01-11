@@ -7,12 +7,16 @@ import { CreateAccountInput } from "./dtos/create-account.dto";
 import { EditProfileInput } from "./dtos/edit-profile.dto";
 import { LoginInput } from "./dtos/login.dto";
 import { User } from "./entities/user.entity";
+import { Verification } from "./entities/verification.entity";
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private readonly users: Repository<User>,
+    @InjectRepository(Verification)
+    private readonly verifications: Repository<Verification>,
+
     private readonly jwtService: JwtService,
   ) { }
 
@@ -27,7 +31,12 @@ export class UserService {
 
       // 2. create user
       // 2-1hash the password
-      await this.users.save(this.users.create({ email, password, role }))
+      const user = await this.users.save(this.users.create({ email, password, role }))
+      // email verification
+      await this.verifications.save(this.verifications.create({
+        code: '12312312',
+        user
+      }))
       return { ok: true };
 
     } catch (e) {
@@ -74,7 +83,11 @@ export class UserService {
     // user.entity.ts의 beforeUpdate() Hook을 걸지 못한다. 왜?~! 그저 db에  query만 보내기때문
     const user = await this.users.findOne(userId);
 
-    if (email) user.email = email;
+    if (email) {
+      user.email = email
+      user.verified = false;
+      await this.verifications.save(this.verifications.create({ user }));
+    };
     if (password) user.password = password;
 
 

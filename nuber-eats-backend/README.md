@@ -372,3 +372,6 @@ verification을 다루는 아주 작은 프로젝트. 이를 통해 DB의 관계
 
 JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리만의 이메일 모듈을 만들자.
 
+- 6.1 Creating Verifications 
+   - User가 Account를 생성했을때, Entity에 Verification을 추가했으면 좋겠어.
+   - code : uuid를 사용해 `npm i uuid`
