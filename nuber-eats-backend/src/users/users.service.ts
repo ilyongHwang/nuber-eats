@@ -93,4 +93,17 @@ export class UserService {
 
     return this.users.save(user);
   }
+
+  async verifyEmail(code: string): Promise<boolean> {
+    // 1. verification을 찾자.
+    const verification = await this.verifications.findOne(
+      { code }, 
+      { relations: ["user"], });
+      // { loadRelationIds: true }); // verification.
+    if(verification) {
+      verification.user.verified = true;
+      this.users.save(verification.user);
+    }
+    return true;
+  }
 }

@@ -375,3 +375,8 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
 - 6.1 Creating Verifications 
    - User가 Account를 생성했을때, Entity에 Verification을 추가했으면 좋겠어.
    - code : uuid를 사용해 `npm i uuid`
+
+- 6.1 Verifying User part One
+   - verification code를 사용해서 사용자의 verification을 찾을 꺼야.
+   - verification module을 만들어도 좋아. 
+   - resolver를 만들어주자.
