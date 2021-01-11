@@ -385,3 +385,11 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - `@Column({ select: false })`
    - `@OneToOne(type=>User, {onDelete: "CASCADE})` : user와 붙어있는 verification도 같이 삭제한다는 의미.
 
+- 6.5  Mailgun Setup
+   - `Mailgun`: 이메일을 보내는 최고의 서비스!
+   - Sendgrid라는 서비스도 시도해봤는데, 불편하댕
+   - 계정만들고 인증하자. 가짜핸드폰인증은 ㅋㅋ `receive-smss`에서 받을 수 있쏭
+   - `sandbox domain` : 니가 이 도메인으로 메일을 보내는거야.
+   - `API Keys`: Public Api Key
+   - credit Card등록 안햇으면 `Authorized Recipients`에 등록된 5개의 계정에만 mailgun 서비스를 이용할 수 있어.
+   
