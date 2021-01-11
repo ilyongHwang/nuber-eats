@@ -376,7 +376,12 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - User가 Account를 생성했을때, Entity에 Verification을 추가했으면 좋겠어.
    - code : uuid를 사용해 `npm i uuid`
 
-- 6.1 Verifying User part One
+- 6.1 Verifying User
    - verification code를 사용해서 사용자의 verification을 찾을 꺼야.
    - verification module을 만들어도 좋아. 
    - resolver를 만들어주자.
+   - relationShip을 불러올 것인지 아닌지 여부 결정하는 typeorm find options : `loadRelationIds`
+
+   - `@Column({ select: false })`
+   - `@OneToOne(type=>User, {onDelete: "CASCADE})` : user와 붙어있는 verification도 같이 삭제한다는 의미.
+

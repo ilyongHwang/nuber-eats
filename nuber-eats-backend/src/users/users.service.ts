@@ -47,7 +47,7 @@ export class UserService {
   async login({ email, password }: LoginInput): Promise<{ ok: boolean; error?: string, token?: string }> {
     try {
       // 1. find the user with the mail
-      const user = await this.users.findOne({ email });
+      const user = await this.users.findOne({ email }, { select: ["id", "password"] }); // makeing sure select password
       if (!user) {
         return {
           ok: false,
@@ -95,15 +95,21 @@ export class UserService {
   }
 
   async verifyEmail(code: string): Promise<boolean> {
-    // 1. verification을 찾자.
-    const verification = await this.verifications.findOne(
-      { code }, 
-      { relations: ["user"], });
-      // { loadRelationIds: true }); // verification.
-    if(verification) {
-      verification.user.verified = true;
-      this.users.save(verification.user);
+    try {
+      // 1. verification을 찾자.
+      const verification = await this.verifications.findOne(
+        { code }, 
+        { relations: ["user"], });
+        // { loadRelationIds: true }); // verification.
+      if(verification) {
+        verification.user.verified = true;
+        this.users.save(verification.user); // beforeUpdate() => password를 또 hash 해버려
+        return true;
+      }
+      throw new Error();
+    } catch(e) {
+      console.log(e);
+      return false;
     }
-    return true;
   }
 }
