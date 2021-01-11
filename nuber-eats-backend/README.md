@@ -366,4 +366,9 @@ The Backend of Nuber Eats Clone
    5. user가 있는지 없는지에 따라 true, false를 return 할껴
    6. 마지막에 guard에 의해 request가 authorize되면
    7. resolver에 decorator가 필요해, decorator는 graphql context에서 찾은 user와 같은 user를 찾으려고 할껴
-   8. 
+
+## 6. Email Verification
+verification을 다루는 아주 작은 프로젝트. 이를 통해 DB의 관계에 대해 설명
+
+JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리만의 이메일 모듈을 만들자.
+

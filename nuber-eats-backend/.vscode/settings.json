@@ -1,3 +1,22 @@
 {
-  "material-icon-theme.activeIconPack": "nest"
+  "workbench.iconTheme": "material-icon-theme",
+  "material-icon-theme.activeIconPack": "nest",
+  // Set the default
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+      // For ESLint
+      "source.fixAll.eslint": true
+  },
+  // Enable per-language
+  "[javascript]": {
+      "editor.formatOnSave": true
+  },
+  // settings.json
+  "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "prettier.endOfLine": "crlf"
 }
