@@ -412,3 +412,33 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - mailGun Template을 씁시다.
    - Sending > Templates > alert Template 선택
    - Email Template은 `handlebars` 뷰엔진을 씁니다...~~더럽고 추악한...~~
+
+
+## 7 UNIT TESTING THE USER SERVICE
+- 7.0 Setting Up Tests
+   - 모든기능에 대해서 `unit test`후 서비스 후에 `end to end` 테스트 후 `intergrate test` 할 꺼얌.
+   - NestJS가 준비한 자동 기능은 `npm run test`얌 (watch)
+   - `users.service.spec.ts` 만들자.
+      - `package.json`의 `"testRegex": ".spec.ts$",`이 spec.ts를 찾아서 검사해줌.
+   - Step1
+      - ```ts
+        beforeAll(async () => {
+            const module = await Test.createTestingModule({
+                  providers: [UserService],
+            }).compile();
+        }
+        ```
+   - Step2
+      - ```ts
+         let service: UserService;
+
+         beforeAll(async () => {
+            const module = await Test.createTestingModule({
+                  providers: [UserService],
+            }).compile();
+            service = module.get<UserService>(UserService); 
+         });
+        ```
+   - Error!
+      - `Cannot find module 'src/jwt/jwt.service' from 'users/users.service.ts'`
+      - src 경로 를 찾지 못하고 있어.
