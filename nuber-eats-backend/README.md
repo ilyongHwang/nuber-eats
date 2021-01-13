@@ -442,3 +442,46 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - Error!
       - `Cannot find module 'src/jwt/jwt.service' from 'users/users.service.ts'`
       - src 경로 를 찾지 못하고 있어.
+   - **유닛테스트**의 포인트는 가능한 한 테스트들을 독립시키는 것.
+
+- 7.1 Mocking
+   - Error는 Jest가 우리 코드의 경로를 찾지 못해서 일어난 것이다.
+   - **타입스크립트**를 쓰고 있기 때문에 `../../` 이런식으로 쓸 필요가 없다. 하지만 jest는 못 찾는다.
+   - Solve
+      - `package.json` 에서 jest가 파일을 찾는 방식을 수정한다.
+      - ```ts
+         "jest": {
+            "moduleNameMapper": {
+               "^src/(.*)$":"<rootDir>/$1"
+            },
+   - Error!
+      - `Nest can't resolve dependencies of the UserService (?, VerificationRepository, JwtService, MailService). Please make sure that the argument UserRepository at index [0] is available in the RootTestModule context.`
+      - UserSerivce는 repository가 필요한데, test module에서 repostiory를 제공하지 않아서 그래.
+      - 하지만 TypeORM에서 Repository를 제공하지 않고, **Mock Repository**를 제공할꺼야
+      - Mock: 가짜 함수얌. 가짜 함수의 실행, 가짜 클래스의 실행이야. 
+         - 진짜 User Repository를 불러와서 실행하지 않아. 왜냐면 유닛 테스트니까. 
+   - Solve
+      - 1. provide UserRepository
+         ```ts
+         providers: [
+            {
+               provide: getRepositoryToken(User), 
+               useValue: "", // 이건 속임수로 만드는 것이얌
+            }, ... ]
+         ```
+      - 2. UserService에서 사용하는 userRepsitory의 method는 `fidnOne`, `save`, `create`밖에 없다.
+         ```ts
+         const mockRepository = {
+            findOne: jest.fn(),
+            create: jest.fn(),
+            save: jest.fn(),
+         }
+         ...
+
+         useValue: mockRepository,
+         
+         ...
+         ```
+      - 3. Repository, Service를 Mocking 해서 하고 있송.
+   - 이제 UserService를 정의하여 Test를 사용할 수 있어
+   - 
