@@ -61,7 +61,7 @@ describe("UserService", () => {
     describe('createAccount', () => {
         it('should fail if user exists', async () => {
             // findOne이 실패하면 mockResolvedValue를 할 꺼야. (Promise를 사용하기 때문에)
-            usersRepository.findOne.mockResolvedValue({
+            usersRepository.findOne.mockResolvedValue({ // createAccount method의 usersRepository.findOne은 이 value를 리턴할 거라고 미리 정의함.  
                 id: 1,
                 email: 'lalalalal',
             });
