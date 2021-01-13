@@ -545,3 +545,19 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - 겁나 햇갈리구만.
    - 지금은 `findOne`만 했고 나중에 `users.save()`를 속이고, `this.verications.save()`를 속이고 쭉 다 속일꺼임. 심지어 `try catch`도 속일꺼임. ㅋㅋ
 
+- #7.5 createAccount Test part One
+   - 나머지를 작업할 거고.
+   - `npm run test:cov` 얘는 내 모든 코드의 테스트가 어디까지 커버(coverage)되고 있는지 보여준다.
+      - 근데 `jest`가 모든 파일에 대해서 coverage를 보여주는데 나는 service만 coverage가 되고 있는것을 보고 시펑!
+      - `package.json`
+         ```json
+         "jest" : {
+            "coveragePathIgnorePatterns": [
+               "node_modules",
+               ".entity.ts",
+               ".constants.ts"
+            ]
+         }
+         ```
+   - `expect(usersRepository.create).toHaveBeenCalledTimes(1);` : 이 함수가 단 한번 불릴거라고 기대하는 거야.
+   - `expect(usersRepository.create).toHaveBeenCalledWith(createAccountArgs);` : 이 함수가 createAccountArgs와 함께 불럴꺼라고~
