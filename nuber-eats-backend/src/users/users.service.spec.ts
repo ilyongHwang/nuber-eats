@@ -1,5 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { getRepositoryToken } from "@nestjs/typeorm";
+import { string } from "joi";
 import { JwtService } from "src/jwt/jwt.service";
 import { MailService } from "src/mail/mail.service";
 import { Repository } from "typeorm";
@@ -22,11 +23,13 @@ const mockMailService = {
     sendVerificationEmail: jest.fn(),
 };
 
-type MockRepository<T = any> = Partial<Record<keyof Repository<User>, jest.Mock>>;
+type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 
 describe("UserService", () => {
     let service: UserService;
     let usersRepository: MockRepository<User>; // UserRepository의 모든 함수를 가져오는거얌 : keyof를 쓰자.
+    let verificationsRepository: MockRepository<Verification>;
+    let mailService: MailService;
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
@@ -51,7 +54,9 @@ describe("UserService", () => {
             ],
         }).compile();
         service = module.get<UserService>(UserService);
+        mailService = module.get<MailService>(MailService);
         usersRepository = module.get(getRepositoryToken(User));
+        verificationsRepository = module.get(getRepositoryToken(Verification));
     });
 
     it('it should be defined', () => {
@@ -79,14 +84,31 @@ describe("UserService", () => {
         
         it('should create a new users', async () => {
             usersRepository.findOne.mockResolvedValue(undefined);
-            usersRepository.create.mockResolvedValue(createAccountArgs);
-            await service.createAccount(createAccountArgs);
+            usersRepository.create.mockReturnValue(createAccountArgs);
+            usersRepository.save.mockResolvedValue(createAccountArgs);
+            verificationsRepository.create.mockReturnValue({ user: createAccountArgs });
+            verificationsRepository.save.mockResolvedValue({ code: 'code' });
+            const result = await service.createAccount(createAccountArgs);
 
             expect(usersRepository.create).toHaveBeenCalledTimes(1); // 이 함수가 단 한번 불릴거라고 기대하는 거야.
             expect(usersRepository.create).toHaveBeenCalledWith(createAccountArgs);
 
             expect(usersRepository.save).toHaveBeenCalledTimes(1); // 이 함수가 단 한번 불릴거라고 기대하는 거야.
             expect(usersRepository.save).toHaveBeenCalledWith(createAccountArgs);
+
+            expect(verificationsRepository.create).toHaveBeenCalledTimes(1); // 이 함수가 단 한번 불릴거라고 기대하는 거야.
+            expect(verificationsRepository.create).toHaveBeenCalledWith({ user: createAccountArgs});
+            
+            expect(verificationsRepository.save).toHaveBeenCalledTimes(1); // 이 함수가 단 한번 불릴거라고 기대하는 거야.
+            expect(verificationsRepository.save).toHaveBeenCalledWith({ user: createAccountArgs });
+            
+            expect(mailService.sendVerificationEmail).toHaveBeenCalledTimes(1);
+            expect(mailService.sendVerificationEmail).toHaveBeenCalledWith(
+                expect.any(String), // 어떤 Type으로든 검사가 가능해용 
+                expect.any(String)
+            );
+
+            expect(result).toEqual({ok: true}); // 마지막 return 이 제대로 됐는지 확인
         });
     })
 

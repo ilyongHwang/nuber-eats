@@ -561,3 +561,7 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
          ```
    - `expect(usersRepository.create).toHaveBeenCalledTimes(1);` : 이 함수가 단 한번 불릴거라고 기대하는 거야.
    - `expect(usersRepository.create).toHaveBeenCalledWith(createAccountArgs);` : 이 함수가 createAccountArgs와 함께 불럴꺼라고~
+
+- #7.6 createAccount Test part Two
+   - creatAccount method를 모두 coverage 해보자.
+   - `expect.any(String)`: 어떤 Type으로든 검사가 가능해용 
