@@ -484,4 +484,22 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
          ```
       - 3. Repository, Service를 Mocking 해서 하고 있송.
    - 이제 UserService를 정의하여 Test를 사용할 수 있어
-   - 
+
+- 7.2 Mocking part Two
+   - 이제는 `createAccount` method를 Test할 꺼야
+   - 실제 request값을 넣고 특정한 response를 기대하는건 E2E 에 가까움.
+      - 많은 파트를 같이 필요로하는 테스트를 말하는거쥐
+      - fidn User, mailService.send sdfsa... 많이 필요해.
+   - 유닛테스트에서 하고 싶은건 코드의 각 줄에 문제가 없나 하는거 임.
+   - 우리가 부르는 각 함수를 테스트하고 있어.
+   - 햇갈릴껀데
+      - 코드가 우리가 의도한 대로 작동하는 지 테스트하고 싶어.
+      - 만약 코드가 의도한 대로 작동하고 있으면 내가 원하는 출력물이 나온다는건 맞아.
+      - 하지만 이건 고립된 상태가 아니고, 유닛 테스트에서는 고립된 결과를 원한단 말이야.
+      - 직접해봅시당 ^_^
+   - 참고) TypeScript의 Partial 타입: 타입 T의 모든 요소를 optional 하게 만든다.
+   - 참고) TypeScript의 Record 타입: 타입 T의 요소 K의 집합으로 타입을 만들어주는 T 이다.
+      - ```ts
+        let test: Partial<Record<"hello", number>>
+        test.hello // 하면 타입이 number로 찍힌다.
+        ```
