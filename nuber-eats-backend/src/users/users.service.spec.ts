@@ -27,8 +27,6 @@ type MockRepository<T = any> = Partial<Record<keyof Repository<User>, jest.Mock>
 describe("UserService", () => {
     let service: UserService;
     let usersRepository: MockRepository<User>; // UserRepository의 모든 함수를 가져오는거얌 : keyof를 쓰자.
-    
-
 
     beforeAll(async () => {
         const module = await Test.createTestingModule({
@@ -61,9 +59,21 @@ describe("UserService", () => {
     });
 
     describe('createAccount', () => {
-        it('should fail if user exists', () => {
-            // 모든 걸 가짜로 하니 이해하기 어려울 꺼지만 해보면 쉬웡
-            
+        it('should fail if user exists', async () => {
+            // findOne이 실패하면 mockResolvedValue를 할 꺼야. (Promise를 사용하기 때문에)
+            usersRepository.findOne.mockResolvedValue({
+                id: 1,
+                email: 'lalalalal',
+            });
+            const result = await service.createAccount({
+                email:"",
+                password: "",
+                role: 0,
+            });
+            expect(result).toMatchObject({
+               ok: false,
+               error: `There is a user with that email already`,
+            })
         })
     })
 

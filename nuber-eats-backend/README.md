@@ -503,3 +503,38 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
         let test: Partial<Record<"hello", number>>
         test.hello // 하면 타입이 number로 찍힌다.
         ```
+   - `type MockRepository<T = any> = Partial<Record<keyof Repository<User>, jest.Mock>>;`
+      - 이게 머냐고?
+      1. `Partial` : 타입 T의 모든 요소를 optional하게 한다.
+      2. `Record` : 타입 T의 모든 K의 집합으로 타입을 만들어준다.
+      3. `keyof Repository<User>` : Repository<User>의 모든 method key를 불러온다.
+      4. `jest.Mock` : 3번의 key들을 다 **가짜**로 만들어준다.
+      5. `type MockRepository<T = any>` : 이를 type으로 정의해준다.
+
+- 7.3 Writing Our First Test
+   - User가 DB에 있으면 ok가 true고 아니면 false
+   - TypeORM을 직접안넣고 어떻게하냐고? 
+      - mock은 함수의 반환값을 속이기 때문에 가능하다.
+   - 문제는 createAccount함수는 다른 것에도 의지하기 때문에 이 의지하는 모든 것을 가짜로 만들어야해.
+   - 그러니 이러한 것들을 Mock 할꺼야.
+   - ```ts
+      describe('createAccount', () => {
+         it('should fail if user exists', () => {
+               // findOne이 실패하면 mockResolvedValue를 할 꺼야. (Promise를 사용하기 때문에)
+               usersRepository.findOne.mockResolvedValue({
+                  id: 1,
+                  email: 'lalalalal',
+               });
+               const result = service.createAccount({
+                  email:"",
+                  password: "",
+                  role: 0,
+               });
+               expect(result).toMatchObject({
+                  ok: false,
+                  error: `There is a user with that email already`,
+               })
+         })
+      })
+     ```
+   - 데이터베이스에 
