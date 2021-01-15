@@ -586,3 +586,6 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - `findById` 빨리 해보자!
       - 그전에 `findOne`을 `findOneOrFail`으로 바꾼다.
       - `findOneOrFail`은 못 찾으면 error를 throw를 할 꺼야.
+
+- #7.10 editProfile Test part One
+   - 
