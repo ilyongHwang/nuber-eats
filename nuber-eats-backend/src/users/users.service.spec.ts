@@ -15,7 +15,7 @@ const mockRepository = () => ({
 });
 
 const mockJwtService = {
-    sign: jest.fn(),
+    sign: jest.fn(() => `signed-token-baby`),
     verify: jest.fn(),
 };
 
@@ -30,8 +30,9 @@ describe("UserService", () => {
     let usersRepository: MockRepository<User>; // UserRepository의 모든 함수를 가져오는거얌 : keyof를 쓰자.
     let verificationsRepository: MockRepository<Verification>;
     let mailService: MailService;
+    let jwtService: JwtService;
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         const module = await Test.createTestingModule({
             providers: [
                 UserService, 
@@ -57,6 +58,7 @@ describe("UserService", () => {
         mailService = module.get<MailService>(MailService);
         usersRepository = module.get(getRepositoryToken(User));
         verificationsRepository = module.get(getRepositoryToken(Verification));
+        jwtService = module.get<JwtService>(JwtService);
     });
 
     it('it should be defined', () => {
@@ -137,8 +139,43 @@ describe("UserService", () => {
                 error: 'User not found',
               });
         });
+
+        it('should fail if the password is wrong', async () => {
+            const mockedUser = {
+                checkPassword: jest.fn(() => Promise.resolve(false)), // promise를 return하는 mock function 임.
+            };
+            // user를 found로 되게 해야함.
+            usersRepository.findOne.mockResolvedValue(mockedUser);
+            const result = await service.login(loginArgs);
+            expect(result).toEqual({
+                ok: false,
+                error: 'Wrong password',
+            });
+        });
+        
+        it('should return token if password correct', async () => {
+            const mockedUser = {
+                id: 1,
+                checkPassword: jest.fn(() => Promise.resolve(true)), // promise를 return하는 mock function 임.
+            };
+            usersRepository.findOne.mockResolvedValue(mockedUser);
+            const result = await service.login(loginArgs);
+            expect(jwtService.sign).toHaveBeenCalledTimes(1);
+            expect(jwtService.sign).toHaveBeenCalledWith(expect.any(Number));
+            expect(result).toEqual({
+                ok: true,
+                token: 'signed-token-baby',
+              });
+        });
+
+        it(`should fail on exception`, async () => {
+            usersRepository.findOne.mockRejectedValue(new Error(":)"));
+            const result = await service.login(loginArgs);
+            // console.log(result);
+            expect(result).toEqual({ ok: false, error: new Error(`:)`)});
+        });
     });
-    it.todo('login');
+    
     it.todo('findById');
     it.todo('editProfile');
     it.todo('verifyEmail');

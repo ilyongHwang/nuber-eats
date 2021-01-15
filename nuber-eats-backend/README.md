@@ -571,3 +571,14 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - 그리고 `login` method를 test 해보자.
       - `toHaveBeenCalledTimes(1)` 얘가 안먹히네.. 3번이나 호출?? 왜지..
 
+- #7.8 login Test part Two
+   - repository.findOne 이 1번만 되어야 하는데 4번 call 되는 문제를 겪었어.
+   - 이 문제는 그 위에 describe에서 이미 불렀기 때문에, 우리 call 횟수가 증가한 거야.
+      - 이 모든 테스트에서 기본적으로 동일한 mocks를 공유하기 때문이야.
+      - module이 모두 test전에 만들어진거야. function 1,2,3,4번 call하면 이게 jest 메모리에 들어가 4번 call 한 것을 기억하는 거지.
+      - beforeall 이 아니라 before Each 해야함
+      - 이제 이 test 모듈이 각 test 전에 다시 만들어 진거라고 확신할 수 있음.
+   - Unit test할 댄 before each, end-to-end는 before All 로 테스트.
+   - 할 수 있는 return value는 다 mock 해야함.
+   - return value에 대한 코드의 반응을 test하고 싶은거잖아. 실제로 있는 데이터가아니라. 코드 그 자체를!
+   
