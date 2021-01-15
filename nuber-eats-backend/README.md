@@ -588,4 +588,7 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
       - `findOneOrFail`은 못 찾으면 error를 throw를 할 꺼야.
 
 - #7.10 editProfile Test part One
-   - 
+   - 으ㅏㅏㅏㅏ 피곤해
+
+- #7.11 editProfile Test part Two
+   - email verification 했고, editProfile 밑 부분 하자.
