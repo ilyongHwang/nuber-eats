@@ -595,3 +595,16 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
 
 - #7.12 verifyEmail Test
    - `verifyEmail` 부분하자.
+
+- #7.13 Conclusions
+   - code coverage -> `user.serivce.ts` coverage 100%
+   - 우리가 만든 service 행을 모두 테스트했어.
+   - 130행을 테스트하기 위해 300행을 했다.. 하지만 나쁜건 아니래.
+   - service를 ts를 배웠습니다.
+   - result를 mock해야하는 것을 배웠습니다.
+   - 코드의 조건 하나하나 체크하기 ㅜ이해서 mock 하는 겁니다.
+   - 실제 db에 user 에 create, update, 실제 email을 보낸다거니, sign 하는걸 아닙니다.
+   - 우리는 그저 코드가 예상하는대로 흘러가길 원합니다.
+   - 그러기 위해서 mock, fakeing 해야함.
+   - 다시 한번 coverage를 살펴보면 mail.service와 jwt.service가 심각하게 구립니다.
+   - mock! email같은 경우. test하기 어렵지 않겠어... 
