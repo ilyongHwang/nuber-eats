@@ -565,3 +565,9 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
 - #7.6 createAccount Test part Two
    - creatAccount method를 모두 coverage 해보자.
    - `expect.any(String)`: 어떤 Type으로든 검사가 가능해용 
+
+- #7.7 login Test part One
+   - `it should fail on exception` 테스트 해야함.
+   - 그리고 `login` method를 test 해보자.
+      - `toHaveBeenCalledTimes(1)` 얘가 안먹히네.. 3번이나 호출?? 왜지..
+
