@@ -592,3 +592,6 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
 
 - #7.11 editProfile Test part Two
    - email verification 했고, editProfile 밑 부분 하자.
+
+- #7.12 verifyEmail Test
+   - `verifyEmail` 부분하자.
