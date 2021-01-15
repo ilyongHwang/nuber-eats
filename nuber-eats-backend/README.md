@@ -582,3 +582,7 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - 할 수 있는 return value는 다 mock 해야함.
    - return value에 대한 코드의 반응을 test하고 싶은거잖아. 실제로 있는 데이터가아니라. 코드 그 자체를!
    
+- #7.9 findById Test
+   - `findById` 빨리 해보자!
+      - 그전에 `findOne`을 `findOneOrFail`으로 바꾼다.
+      - `findOneOrFail`은 못 찾으면 error를 throw를 할 꺼야.
