@@ -57,7 +57,7 @@ import { MailModule } from './mail/mail.module';
       domain:process.env.MAILGUN_DOMAIN_NAME,
       fromEmail:process.env.MAILGUN_FROM_EMAIL,
     }),
-    AuthModule,
+    // AuthModule,
   ],
   controllers: [],
   providers: [],
@@ -65,10 +65,12 @@ import { MailModule } from './mail/mail.module';
 export class AppModule implements NestModule {
   // 2. Function Middleware
   configure(consumer: MiddlewareConsumer) {
-    consumer.apply(JwtMiddleware).forRoutes({
-      path: '/graphql',
-      method: RequestMethod.ALL,
-    })
+    consumer
+      .apply(JwtMiddleware)
+      .forRoutes({
+        path: '/graphql',
+        method: RequestMethod.POST,
+      })
   }
 
   // 1. Class Middleware

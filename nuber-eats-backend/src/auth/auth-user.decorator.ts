@@ -7,5 +7,4 @@ export const AuthUser = createParamDecorator( // factory function이 필요
     const user = gqlContext['user'];
     return user;
   }
-
 )

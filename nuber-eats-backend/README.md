@@ -722,3 +722,10 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - login을 테스트하기 전에 userID를 알아야 합니다.
    - 제일 밖에있는 describe clouser 안에 `jwtToken` 변수를 넣고, login에 성공하면 넣어줍시다.
    - 좀 쉽네... ㅎ
+
+- #9.5 Testing userProfile
+   - userProfile은 약간 까다롭습니다.
+   - 로그인만 되어있다면 어떤 user의 프로파일을 참고할 수 있습니다.
+      - userId를 어떻게 찾아올까요?
+      - 우리가 database를 만들고 있으니까, 첫 유저는 항상 ID가 1이란 거지... 근데 uuid를 쓰는 경우는 ?ㅋㅋㅋ
+      - module로부터 뭔가를 가져올 수 있어!! `usersRepository`
