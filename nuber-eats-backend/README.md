@@ -759,3 +759,10 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - verifyEmail은 email에 접근할 수 있는 권한(token을 취득할 수 있는 권한)을 요구한다. 
    - 그건 안하고, beforeAll에서 했던 userById를 한 것 처럼 비슷하게 할거야.
       - jest에 숙달하기 위함이야.
+      
+- #9.9 Conclusions
+   - `baseTest`, `publicTest`, `privateTest` 3개를 만들어서 중복되는 코드를 줄였어.
+   - 아 그리고 `return`은 해야지 계속 test가 가능해...
+   - end-to-end, unit test를 모두 끝났어. user section이 끝낫어..
+   - 다음 섹션부터는 날아다녀 restaurant CRUD 엄청 빨리 만들고, resolver도 만들고
+   - 어어어 빠르다 빨라.
