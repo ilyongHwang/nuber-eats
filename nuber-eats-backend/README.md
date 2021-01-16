@@ -617,5 +617,14 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
       - `CONFIG_OPTIONS at index [0] is not available` 그래서 CONFIG_OPTIONS를 제공해줘야해.
    - 우리는 sign(verify도 동일)이 호출된 횟수를 체크하고, 반환값을 mock하고, sign이 어떻게 호출된 건지 체크할 수 있어.
    - testKey를 constant로 바깥에 만들자.
-   
-   
+
+- #8.1 JWT Sign TesT
+   - json web token을 mocking 하자.
+      - jwt를 실제 JWT package로부터 사용하지 않으려고 이런 작업을 해주는 거얌.
+      - test하는 부분 바깥으로 가서, `jest.mock()`를 입력하자.
+      1. 우리가 사용할 package이름을 넣고, `jest.mock('jsonwebtoken')`
+      2. factory pattern을 사용하자.
+      
+- #8.2 JWT Verify Test
+   - return 문자열 검사
+   - 
