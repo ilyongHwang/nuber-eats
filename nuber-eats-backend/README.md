@@ -717,3 +717,8 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
          - jest가 코드의 어떤 부분이 open 상태였는지를 알려 줄꺼임.
       - resolver를 test할때 `got`를 안쓸꺼야! 어떻게? **mock!!!**
    - 참고로 `expect().toEqual()`에 비해 `expect().toBe()`은 더 정확해야해.
+
+- #9.4 Testing login 
+   - login을 테스트하기 전에 userID를 알아야 합니다.
+   - 제일 밖에있는 describe clouser 안에 `jwtToken` 변수를 넣고, login에 성공하면 넣어줍시다.
+   - 좀 쉽네... ㅎ
