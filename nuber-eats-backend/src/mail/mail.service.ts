@@ -13,7 +13,7 @@ export class MailService {
     // this.sendEmail('testing', 'test').then(() => console.log(`success`)).catch(err => console.log(err.response));
   } // NestJS가 시작할 때 마다 이 함수를 테스트 하는 거얌!
 
-  private async sendEmail(
+  async sendEmail(
       subject: string, 
       // to: string, // 돈내야해! ㅋㅋ
       template: string, 

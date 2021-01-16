@@ -627,4 +627,12 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
       
 - #8.2 JWT Verify Test
    - return 문자열 검사
-   - 
+   - Mail Service로 test setup.
+
+- #8.3 sendVerificationEmail Test
+   - spy function : 함수를 mock할 수 없을 때, spy를 쓰는거임.
+      - 염탐하는 뜻. 
+      - `service.sendEmail = jest.fn()` 이런식으로 안하 겟음.
+         - 이건 service.sendEmail이 mock function이라고 하는 셈이 되어버림.
+      - sendEmail을 test해야함.
+      - `jest.spyOn(service, 'sendEmail')`
