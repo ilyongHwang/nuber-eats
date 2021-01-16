@@ -641,3 +641,33 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
 - #8.4 sendEmail Test
    - `FormData`는 mocking할 수 없어, 왜냐면 append는 new formData()를 실행해서 FormData를 만든 후에 실행할 수 있기 때문.
    - `forEach` spy는 어떻게합니까?
+
+## 9 USER MODULE E2E
+- #9.0 Setup part One
+   - User 모듈 E2E 진행할 겁니다.
+   - 6개의 resolver 에 대해서 test해볼 겁니다.
+   - NestJS의 `test` 폴더 안에 end-to-end testing file을 가지고 있습니다.
+   - 우리는 이 파일의 일므을 변경할꺼. -> user만 e2e할꺼라고 `users.e2e-spec.ts`로 바꿀껍니다.
+   - 우리는 기본적으로 전체 application을 load해서, Resolver를 테스트할 수 있기를 원합니다.
+   - `$ npm run test:e2e`
+   - 그러면 `Cannot find module` 뜨는데 `test/jest-e2e.json`을 수정하면 됩니다.
+      ```json
+      "moduleNameMapper": {
+         "^src/(.*)$":"<rootDir>/../src/$1"
+      },
+      ```
+   - 다음 `joi` error 나오는데 JoiSchema를 수정해봅시다.
+      ```ts
+      // app.module.ts
+      NODE_ENV: Joi.string().valid('dev', 'prod', 'test').required(),
+      ```
+      ```env
+      # .env.test
+      # copy all things in .env.dev
+
+      # modify below this.
+      DB_NAME=nuber-eats-test
+      ```
+   - 그리고 `beforeEach`->`beforeAll` 로 바꿉시다. 왜냐하면 각각의 test전에 module을 load하지 않고, 모든 test 전에 module을 load하고 싶거든요.
+   - 그리고 `nuber-eats-test` database를 만들어 주세오.
+   
