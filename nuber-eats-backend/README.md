@@ -744,3 +744,13 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
          ```
          이렇게 수정하자.
 
+- #9.7 Testing editProfile
+   - editProfile 그다지 많은 것을 테스트 않을 꺼야.
+   - 그리고 editProfile은 보안이 매우 약해.
+   - 내가 원하는 email로 마구 수정할 수 있고, 이미 사용중인 이메일로의 수정은 막아야 하지.
+      - email을 수정하기 전에, 먼저 해당 email을 가지고 있는 유저가 있는지를 확인해야함.
+   - 또! 에러가 나타나는데, user랑 verification entity는 `OneToOne`으로 연결되어있어.
+      - 우리의 test는 verification이 하나랑 연결되어야하는데 있는채로 하나를 추가해버리는 꼴이 되어 버린거야.
+      - 그래서, 프로필을 수정하려고 할 때에는 먼저 모든 verification들을 삭제하도록 해야 함.
+      - `user.service.ts` 수정해야지.
+   - `.then()`을 사용해서 바꾼 email이 맞는지 확인 할 수 도 있고, 새로운 `it()`을 만들어서 email을 확인 할 수 도 있다.
