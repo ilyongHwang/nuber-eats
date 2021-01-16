@@ -754,3 +754,8 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
       - 그래서, 프로필을 수정하려고 할 때에는 먼저 모든 verification들을 삭제하도록 해야 함.
       - `user.service.ts` 수정해야지.
    - `.then()`을 사용해서 바꾼 email이 맞는지 확인 할 수 도 있고, 새로운 `it()`을 만들어서 email을 확인 할 수 도 있다.
+
+- #9.8 Testing verifyEmail 
+   - verifyEmail은 email에 접근할 수 있는 권한(token을 취득할 수 있는 권한)을 요구한다. 
+   - 그건 안하고, beforeAll에서 했던 userById를 한 것 처럼 비슷하게 할거야.
+      - jest에 숙달하기 위함이야.

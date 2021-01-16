@@ -5,6 +5,7 @@ import { AppModule } from '../src/app.module';
 import { getConnection, Repository } from 'typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Verification } from 'src/users/entities/verification.entity';
 
 jest.mock('got', () => {
   return {
@@ -22,6 +23,7 @@ describe('AppController (e2e)', () => {
   let app: INestApplication;
   let jwtToken: string;
   let usersRepository: Repository<User>;
+  let verificationsRepository: Repository<Verification>;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -30,6 +32,7 @@ describe('AppController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     usersRepository = moduleFixture.get<Repository<User>>(getRepositoryToken(User))
+    verificationsRepository = moduleFixture.get<Repository<Verification>>(getRepositoryToken(Verification));
     await app.init();
   });
 
@@ -185,7 +188,7 @@ describe('AppController (e2e)', () => {
       })
       .expect(200)
       .expect(res => {
-        // console.log(res.body);
+        // // console.log(res.body);
         const {
           body: {
             data: { 
@@ -218,7 +221,7 @@ describe('AppController (e2e)', () => {
       })
       .expect(200)
       .expect(res => {
-        // console.log(res.body);
+        // // console.log(res.body);
         const {
           body: {
             data: { 
@@ -248,7 +251,7 @@ describe('AppController (e2e)', () => {
         })
         .expect(200)
         .expect(res => {
-          console.log(res.body);
+          // console.log(res.body);
           const {
             body : {
               data : {
@@ -347,7 +350,68 @@ describe('AppController (e2e)', () => {
   });
 
   describe(`verifyEmail`, () => {
-    it.todo(`should be verified Email`);
+    let verificationCode: string;
+
+    beforeAll(async () => {
+      const [verification] = await verificationsRepository.find();
+      verificationCode = verification.code;
+    });
+
+    it(`should verify Email`, () => {
+      return request(app.getHttpServer()).post(GRAPHQL_ENDPOINT).send({
+        query: `
+        mutation {
+          verifyEmail(input:{
+            code:"${verificationCode}"
+          }) {
+            ok
+            error
+          }
+        }
+        `
+      })
+      .expect(200)
+      .expect((res) => {
+        // console.log(res.body);
+        const {
+          body : {
+            data : {
+              verifyEmail: {ok, error}
+            }
+          }
+        } = res;
+        expect(ok).toBe(true);
+        expect(error).toBe(null);
+      });
+    });
+
+    it(`should fail on verification code not found`, () => {
+      return request(app.getHttpServer()).post(GRAPHQL_ENDPOINT).send({
+        query: `
+        mutation {
+          verifyEmail(input:{
+            code:"qweqwe"
+          }) {
+            ok
+            error
+          }
+        }
+        `
+      })
+      .expect(200)
+      .expect((res) => {
+        // console.log(res.body);
+        const {
+          body : {
+            data : {
+              verifyEmail: {ok, error}
+            }
+          }
+        } = res;
+        expect(ok).toBe(false);
+        expect(error).toBe('Verification not found.');
+      });
+    });
   });
 
 });
