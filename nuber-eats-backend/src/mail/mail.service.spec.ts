@@ -5,10 +5,10 @@ import { MailService } from "./mail.service"
 import got from 'got';
 import * as FormData from 'form-data';
 
-jest.mock('got', () => ({}));
-jest.mock('form-data', () => ({
-    append: jest.fn(),
-}));
+jest.mock('got');
+jest.mock('form-data');
+
+const TEST_DOMAIN = 'test_domain';
 
 describe('mailService', () => {
     let service: MailService;
@@ -21,7 +21,7 @@ describe('mailService', () => {
                     provide: CONFIG_OPTIONS,
                     useValue: {
                         apiKey: 'test-apiKey',
-                        domain: 'test-domain',
+                        domain: TEST_DOMAIN,
                         fromEmail: 'test-fromEmail',
                     },
                 }
@@ -41,7 +41,7 @@ describe('mailService', () => {
                 code: 'code',
             };
 
-            jest.spyOn(service, 'sendEmail').mockImplementation(async () => {});
+            jest.spyOn(service, 'sendEmail').mockImplementation(async () => true);
             
             service.sendVerificationEmail(
                 sendVerificationEmailArgs.email,
@@ -58,5 +58,27 @@ describe('mailService', () => {
             );
         });
     });
-    it.todo(`sendEmail`);
+    
+    describe(`sendEmail`, () => {
+        it(`sends email`, async () => {
+            const ok = await service.sendEmail('', '', []);
+            const formSpy = jest.spyOn(FormData.prototype, "append");
+
+            expect(formSpy).toHaveBeenCalledTimes(4);
+            expect(got.post).toHaveBeenCalledTimes(1);
+            expect(got.post).toHaveBeenCalledWith(
+                `https://api.mailgun.net/v3/${TEST_DOMAIN}/messages`, 
+                expect.any(Object)
+            );
+
+            expect(ok).toEqual(true);
+        });
+        
+        it(`fails on error`, async () =>{
+            jest.spyOn(got, 'post').mockImplementation(() => { throw new Error()})
+            const ok = await service.sendEmail('', '', []);
+            expect(ok).toEqual(false);
+
+        })
+    });
 });

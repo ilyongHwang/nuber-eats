@@ -636,3 +636,8 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
          - 이건 service.sendEmail이 mock function이라고 하는 셈이 되어버림.
       - sendEmail을 test해야함.
       - `jest.spyOn(service, 'sendEmail')`
+      - spy들의 implementation을 어떻게 가로채는지(intercept)에 대해 다음시간에 알아보도록 하자.
+
+- #8.4 sendEmail Test
+   - `FormData`는 mocking할 수 없어, 왜냐면 append는 new formData()를 실행해서 FormData를 만든 후에 실행할 수 있기 때문.
+   - `forEach` spy는 어떻게합니까?

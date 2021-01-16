@@ -18,7 +18,7 @@ export class MailService {
       // to: string, // 돈내야해! ㅋㅋ
       template: string, 
       emailVars: EmailVar[],
-    ) {
+    ): Promise<boolean> {
     //to도 넣을 수 있는데, credit 카드 등록이 필요함 ㅠㅠ
     const form = new FormData();
     form.append('from', `ilyong From Nuber Eats <mailgun@${this.options.domain}>`);
@@ -29,10 +29,9 @@ export class MailService {
     emailVars.forEach((eVar) => form.append(`v:${eVar.key}`, eVar.value));
 
     try {
-        await got(
+        await got.post(
           `https://api.mailgun.net/v3/${this.options.domain}/messages`,
           {
-            method: 'POST',
             headers: {
               Authorization: `Basic ${Buffer.from(
                 `api:${this.options.apiKey}`,
@@ -41,8 +40,9 @@ export class MailService {
             body: form,
           },
         );
+      return true;
     } catch (error) {
-        console.log(error);
+      return false;
     }
   }
 
