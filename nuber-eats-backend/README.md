@@ -671,3 +671,8 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - 그리고 `beforeEach`->`beforeAll` 로 바꿉시다. 왜냐하면 각각의 test전에 module을 load하지 않고, 모든 test 전에 module을 load하고 싶거든요.
    - 그리고 `nuber-eats-test` database를 만들어 주세오.
    
+- #9.1 Setup part Two 
+   - `Warning! Jest did not exit one second after the jest run has completed.`
+   - test가 다 끝나면, database를 싹 비울 거임.
+      - `afterAll`에서 typeorm의 `getConnection().dropDatabase()`를 할꺼얌.
+      
