@@ -675,4 +675,45 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - `Warning! Jest did not exit one second after the jest run has completed.`
    - test가 다 끝나면, database를 싹 비울 거임.
       - `afterAll`에서 typeorm의 `getConnection().dropDatabase()`를 할꺼얌.
-      
+
+- #9.2 Testing createAccount part One
+   ```ts
+   describe(`createAccount`, () => {
+    const EMAIL = 'ilyong@las.com';
+
+    it(`should create account`, () => {
+      return request(app.getHttpServer())
+      .post(GRAPHQL_ENDPOINT)
+      .send({
+        query: `
+        mutation {
+          createAccount(input: {
+            email:"${EMAIL}",
+            password:"12345",
+            role:Owner
+          }) {
+            ok
+            error
+          }
+        }
+        `
+      })
+      .expect(200)
+      .expect(res => {
+        expect(res.body.data.createAccount.ok).toBe(true);
+        expect(res.body.data.createAccount.error).toBe(null);
+      });
+    })
+  });
+   ```
+
+
+- #9.3 Testing createAccount part Two
+   - 근데 하다보면 에러뜬다.
+      - `This usually means that there are asynchronous operations that weren't stopped in your tests. Consider running Jest with '--detectOpenHandles' to troubleshoot this issue.`
+      - 일단 npm run test:e2e에 `--detectOpenHandles`를 달아서 뭐가 문제인지 알아보자.
+      - 이게 대체 머선소리고?
+         - 왜생기냐면, accountㅇ를 생성할 때마다, email을 보내기 때문에 생기는 에러.
+         - jest가 코드의 어떤 부분이 open 상태였는지를 알려 줄꺼임.
+      - resolver를 test할때 `got`를 안쓸꺼야! 어떻게? **mock!!!**
+   - 참고로 `expect().toEqual()`에 비해 `expect().toBe()`은 더 정확해야해.
