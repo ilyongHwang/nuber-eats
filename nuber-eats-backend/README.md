@@ -608,3 +608,14 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - 그러기 위해서 mock, fakeing 해야함.
    - 다시 한번 coverage를 살펴보면 mail.service와 jwt.service가 심각하게 구립니다.
    - mock! email같은 경우. test하기 어렵지 않겠어... 
+
+## 8 UNIT TESTING JWT AND MAIL
+- #8.0 JWT Service Test Setup
+   - 우리가 만든 JWT 서비스와 메일 서비스를 테스트해봅시다.
+   - 외부 라이브러리와 mocking 하는 방법!
+      - `dependency`는 기본적으로 어떤 서비스가 동작하기 위해 무언가에 '의존'해야 한다는 뜻.
+      - `CONFIG_OPTIONS at index [0] is not available` 그래서 CONFIG_OPTIONS를 제공해줘야해.
+   - 우리는 sign(verify도 동일)이 호출된 횟수를 체크하고, 반환값을 mock하고, sign이 어떻게 호출된 건지 체크할 수 있어.
+   - testKey를 constant로 바깥에 만들자.
+   
+   
