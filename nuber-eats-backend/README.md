@@ -729,3 +729,18 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
       - userId를 어떻게 찾아올까요?
       - 우리가 database를 만들고 있으니까, 첫 유저는 항상 ID가 1이란 거지... 근데 uuid를 쓰는 경우는 ?ㅋㅋㅋ
       - module로부터 뭔가를 가져올 수 있어!! `usersRepository`
+
+- #9.6 Testing me
+   - me를 test합시다.
+   - Error 발생!
+      - `Cannot return null for non-nullable field User.email.`
+      - `user.service`를 추적합시다.
+         ```ts
+            if (typeof decoded === "object" && decoded.hasOwnProperty('id')) {
+            const { user, ok } = await this.userService.findById(decoded["id"]);
+            if (ok)
+               req['user'] = user;
+         }
+         ```
+         이렇게 수정하자.
+
