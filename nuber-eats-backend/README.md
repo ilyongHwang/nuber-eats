@@ -766,3 +766,7 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - end-to-end, unit test를 모두 끝났어. user section이 끝낫어..
    - 다음 섹션부터는 날아다녀 restaurant CRUD 엄청 빨리 만들고, resolver도 만들고
    - 어어어 빠르다 빨라.
+
+## 10 RESTAURANT CRUD
+- #10.0 Restaurant Models
+   - 
