@@ -8,9 +8,9 @@ import { compare, hash } from "bcrypt";
 import { Restaurant } from "src/restaurants/entities/restaurant.entity";
 
 export enum UserRole {
-  Client = 'CLIENT',
-  Owner = 'OWNER',
-  Delivery = 'DELIVERY',
+  Client = 'Client',
+  Owner = 'Owner',
+  Delivery = 'Delivery',
 }
 
 // graphql 전용 enum type
