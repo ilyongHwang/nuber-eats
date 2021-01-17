@@ -1,9 +1,11 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
 import { IsString, Length } from 'class-validator';
 import { CoreEntity } from 'src/common/entities/core.entity';
+import { Order } from 'src/orders/entities/order.entity';
 import { User } from 'src/users/entities/user.entity';
-import { Column, Entity, ManyToOne, RelationId } from 'typeorm';
+import { Column, Entity, ManyToOne, OneToMany, RelationId } from 'typeorm';
 import { Category } from './cetegory.entity';
+import { Dish } from './dish.entity';
 
 // 이 entity를 가상화하여 다른 곳에서도 쓸 것이라는 의미.
 @Entity()
@@ -26,7 +28,6 @@ export class Restaurant extends CoreEntity {
   @IsString()
   address: string;
 
-  
   @Field(type => Category, { nullable: true })
   @ManyToOne(
     type => Category,
@@ -44,4 +45,19 @@ export class Restaurant extends CoreEntity {
 
   @RelationId((restaurant: Restaurant) => restaurant.owner)
   ownerId: number;
+  
+  @Field(type => [Dish])
+  @OneToMany(
+    type => Dish,
+    dish => dish.restaurant,
+  )
+  menu: Dish[];
+
+  
+  @Field(type => [Order])
+  @OneToMany(
+    type => Order,
+    order => order.restaurant,
+  )
+  orders: Order[];
 }

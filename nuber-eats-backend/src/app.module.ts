@@ -13,6 +13,10 @@ import { Verification } from './users/entities/verification.entity';
 import { MailModule } from './mail/mail.module';
 import { Category } from './restaurants/entities/cetegory.entity';
 import { AuthModule } from './auth/auth.module';
+import { Dish } from './restaurants/entities/dish.entity';
+import { OrdersModule } from './orders/orders.module';
+import { Order } from './orders/entities/order.entity';
+import { OrderItem } from './orders/entities/order-item.entity';
 
 @Module({
   imports: [
@@ -43,7 +47,7 @@ import { AuthModule } from './auth/auth.module';
       database: process.env.DB_NAME,
       synchronize: process.env.NODE_ENV !== 'prod', // type orm이 DB에 연결할때,데이터베이스르 ㄹ너의 모듈의 현재 상태로 마이그레이션한다는 뜻 ,
       logging: process.env.NODE_ENV !== 'prod' && process.env.NODE_ENV !== 'test', // console.log 로 출력
-      entities: [User, Verification, Category, Restaurant],
+      entities: [User, Verification, Category, Restaurant, Dish, Order, OrderItem],
     }),
     GraphQLModule.forRoot({
       autoSchemaFile: true, // join(process.cwd(), 'src/schema.gql'),
@@ -59,6 +63,7 @@ import { AuthModule } from './auth/auth.module';
       fromEmail:process.env.MAILGUN_FROM_EMAIL,
     }),
     AuthModule,
+    OrdersModule,
   ],
   controllers: [],
   providers: [],
