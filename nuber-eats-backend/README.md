@@ -793,3 +793,9 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - Create Dish
    - Edit Dish
    - Delete Dish
+
+- 10.8 Edit Restaurant part Two
+   - entity에서 `@RelationId` 는 id만 가져오고 object를 가져오지 않는다는 뜻입니다.
+      - repository에선 `{ loadRelationIds: true }` 옵션을 줍니다.
+      - db가 빨라집니다.
+   - 
