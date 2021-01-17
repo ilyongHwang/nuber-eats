@@ -808,3 +808,76 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
       - 그리고 이건 실제로 db에 존재하는 field가 아니고 사용자의 상태에 따라 계산된 field 입니다.
       - `@ResolveField`는 매 request 마다 계산된 field를 만들어줍니다.
          - category에 해당하는 restaurant이 몇 개 인지 보여주는 field를 만드는 거입니다.
+
+## 11. Order와 Dish는 귀찮아서 그냥 복붙합니다.
+
+## 12. Order Subscriptions
+- #12.0 Subscriptions part One
+   - `subscriptions`은 resolver에서 **변경 사항이나 업데이트**를 수신 할 수 있게 해줘.
+   - 작성방법은 mutation과 query를 만든 것 처럼 subscriptions을 만들 수 있습니다.
+      - 규칙이 몇가지 잇습니다.
+         1. 우리가 뭘 return하는지에 따라 정해집니다.
+         2. 예를들어 GraphQL에게 string을 반환한다고 했지만, 실제적 함수는 string을 반환안해.. ??
+         3. 대신에 asyncIterator라는 걸 return 할거얌
+   - 설치
+      - `$ npm i graphql-subscriptions`
+      - real time 처리 할 수 있게 만들어 줌
+      - 설치가 되면 `PubSub`이라는 인스턴스를 생성할 꺼얌.
+         - `PubSub` : publish and subscirbe을 말하는데, app 내부에서 메시지를 교환할 수 있어.
+         - 우리가 return 하는건 asyncIterator 이야. 지금 당장 이해할 수 없지만. subscription이 작동하기 위한 작업이야.
+   - `asyncIterator()`
+      - `trigger` 는 우리가 기다리는 이벤트를 말함.
+   - 그래서 graphQL Playground에서 실행하면 `오류` 나는데
+      - 지금 app은 HTTP 통신을 하고 있고, subscriptions는 WebSocket 통신이 필요해
+      - 그래서 우리는 Web Socket을 활성화 해야해.
+         ```ts
+         // app.module.ts
+         GraphQLModule.forRoot({
+            installSubscriptionHandlers: true,
+         ```
+      - 이렇게하면 서버가 웹 소켓 기능을 가지게 됨.
+   - 그리고 GraphMoudle.forRoot()에서 context를 설정해줬는데, 웹 소켓은 연결할 때 쿠키를 보내고 받고 그런게 없어. 수정해보즈아...
+
+- #12.1 Subscriptions part Two
+   - WS에는 HTTP의 `request`대신 `connection`이 있어 
+
+- #12.2 Subscription Authentication part One 
+   - 누가 gqlcontext를 가져올까.?
+   - 일단 WS통신시 `connection`은 웹 소켓이 클라이언트와 서버간의 연결을 설정하고 할 때 발생함.
+   - 정리
+      - step1. jwt middleware를 제거한다.
+      - step2. guard에 필요한 정보를 보냈어.
+      - step3. guard에서는 모든 정보를 가지고 있어. ( jwtMiddleware가 그랬던 것 처럼.)
+      - ```ts     
+        context: ({ req, connection }) => {
+        const TOKEN_KEY = `x-jwt`;
+        return { token: req ? req.headers[TOKEN_KEY]: connection.context[TOKEN_KEY] };
+        ```
+
+- #12.4 PUB_SUB
+   - 서버가 여러개인 경우, PubSub을 너의 서버가 아니고 다른 분리된 서버에 저장해야함.
+   - `npm i graphql-redis-subscriptions` redisPubSub 쓰세오.
+      - RedisClient로 PubSub을 만들고
+      - cluster를 쓰면 많은 node를 사용할 수 있습니다.
+
+- #12.5 Subscription Filter
+   - `filter`를 쓰는 이유는 모든 update를 listen할 필요가 없기 때문! 필요한 update만 보면 되기때문
+
+- #12.6 Subscription Resolve
+   - `resolve`는 사용자가 받는 update 알림의 형태를 바꿔주는 역할을 하고 있습니다.
+   - TODO LIST 📋
+      - Orders Subscription:
+         - Pending Orders (Owner) (t: createOrder)
+         - Order Status (Customer, Delivery, Owner) (t: editOrder)
+         - Pending Pickup Order (Delivery)
+      - (t: trigger) (s: subscriptions)
+      1. 유저가 order를 만들 때 `createOrder`라는 resolver를 사용하면 `newOrder`라는 event를 trigger함
+      2. 이 때 restaurant owner가 `newOrder` event를 listening 함.
+      3. Owner가 주문을 받아들이면 화면에 order status를 보여줄 꺼야. 그리고 order는 cooking이라는 상태를 가지고 있겟죵?
+      4. owner가 우리가 여기에 만들어놓은 `editOrder` resolver를 사용해서 음식이 cooked되었다고 알리면, `orderUpdate` event를 trigger 할꺼임.
+      5. `oderUpdate` event는 customer와 owner가 listening 하고 있을 껴.
+      6. .... ㅠㅠㅠㅜㅠㅜㅠㅠㅠㅜㅜㅜ
+   - 3개의 resolver를 만들어야해
+      1. owner가 restuarnt에 들어오는 order를 listen하기 위함
+      2. Customer, Delivery, Owner가 특정 id의 order가 update되는걸 보기위한 거
+      3. delivery guy를 위한 pickUpOrder resolver얌

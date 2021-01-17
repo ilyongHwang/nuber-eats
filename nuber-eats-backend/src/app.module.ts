@@ -17,6 +17,7 @@ import { Dish } from './restaurants/entities/dish.entity';
 import { OrdersModule } from './orders/orders.module';
 import { Order } from './orders/entities/order.entity';
 import { OrderItem } from './orders/entities/order-item.entity';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -50,8 +51,12 @@ import { OrderItem } from './orders/entities/order-item.entity';
       entities: [User, Verification, Category, Restaurant, Dish, Order, OrderItem],
     }),
     GraphQLModule.forRoot({
+      installSubscriptionHandlers: true,
       autoSchemaFile: true, // join(process.cwd(), 'src/schema.gql'),
-      context: ({ req }) => ({ user: req["user"] }),
+      context: ({ req, connection }) => {
+        const TOKEN_KEY = `x-jwt`;
+        return { token: req ? req.headers[TOKEN_KEY]: connection.context[TOKEN_KEY] };
+      },
     }),
     UsersModule,
     JwtModule.forRoot({
@@ -64,11 +69,15 @@ import { OrderItem } from './orders/entities/order-item.entity';
     }),
     AuthModule,
     OrdersModule,
+    CommonModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule implements NestModule {
+export class AppModule {}
+
+/** 웹 소켓과 HTTP 둘다 사용 가능한 방법을 찾겟습니다.
+implements NestModule {
   // 2. Function Middleware
   configure(consumer: MiddlewareConsumer) {
     consumer
@@ -88,3 +97,4 @@ export class AppModule implements NestModule {
 
   // .exclude({ path:"/api", method: ... })
 }
+*/
