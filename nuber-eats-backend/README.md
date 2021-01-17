@@ -798,4 +798,13 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - entity에서 `@RelationId` 는 id만 가져오고 object를 가져오지 않는다는 뜻입니다.
       - repository에선 `{ loadRelationIds: true }` 옵션을 줍니다.
       - db가 빨라집니다.
-   - 
+
+- 10.12 Categories part One
+   - Computed Field, Dynamic Field를 써볼 거예오.
+      - Dynamic Field는 db에 실제로 저장되지 않은 field 입니다.
+      - Request가 있을 때마다 계산해서(computed) 보여주는 field 입니다.
+   - 보통 Computed Field, Dynamic Field는 로그인된 사용자의 상태에 따라 계산되는 field 입니다.
+      - 인스타그램에서 포스트에 좋아요를 누르고 다음에 방문하면 `isLike`에 true, false 값을 가진 field가 생깁니다.
+      - 그리고 이건 실제로 db에 존재하는 field가 아니고 사용자의 상태에 따라 계산된 field 입니다.
+      - `@ResolveField`는 매 request 마다 계산된 field를 만들어줍니다.
+         - category에 해당하는 restaurant이 몇 개 인지 보여주는 field를 만드는 거입니다.
