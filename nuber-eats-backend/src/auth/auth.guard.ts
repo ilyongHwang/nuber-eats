@@ -17,12 +17,13 @@ export class AuthGuard implements CanActivate {
       return true;
     }
 
+     // metadata가 있는데 user가 있기를 기대하고 있음.
     const gqlContext = GqlExecutionContext.create(context).getContext();
     const user: User = gqlContext['user'];
     if (!user) {
       return false;
     }
-    if (roles.includes('Any')) {
+    if (roles.includes('Any')) {  // 'Any' 타입은 모든걸 허용해줘.
       return true;
     }
     return roles.includes(user.role);

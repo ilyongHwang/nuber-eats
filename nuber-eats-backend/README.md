@@ -768,5 +768,28 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
    - 어어어 빠르다 빨라.
 
 ## 10 RESTAURANT CRUD
-- #10.0 Restaurant Models
-   - 
+- Role Based Authentication과  authorization을 해보았습니다.
+   -  를 참고하세오.
+   - metadata와 global guard를 사용.
+      - `APP_GUARD`는 nestjs가 전체적으로 적용시킬 겁니다.
+      - `guard`는 reflector를 사용합니다.
+         - reflector는 metadata를 get합니다.
+            - metadata는 resolver의 extra data 입니다.
+         - 그래서 `roles.decorator.ts` 는 metadata를 설정합니다.
+            - 몇몇 resolver는 metadata를 가질꺼고, 이 중 몇개는 role이라는 key에 있을 겁니다.
+            - 그래서 이 데코레이터는 `@SetMetadata()`라는 데코레이터를 반환합니다.
+            - role을 전달 해줍니다.
+         - decorator가 없으면 public 이라는 겁니다.
+
+- TODO LIST 📋
+   - Edit Restaurant
+   - Delete Restaurant
+
+   - See Categories
+   - See Restaurants by Category (pagination)
+   - See Restaurants (pagination)
+   - See Restaurant
+
+   - Create Dish
+   - Edit Dish
+   - Delete Dish
