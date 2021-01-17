@@ -1,12 +1,22 @@
-import { Injectable } from "@nestjs/common";
-import { InjectRepository } from "@nestjs/typeorm";
-import { User } from "src/users/entities/user.entity";
-import { Repository } from "typeorm";
-import { CreateRestaurantInput, CreateRestaurantOutput } from "./dtos/create-restaurant.dto";
-import { EditRestaurantInput, EditRestaurantOutput } from "./dtos/edit-restaurant.dto";
-import { Category } from "./entities/cetegory.entity";
-import { Restaurant } from "./entities/restaurant.entity";
-import { CategoryRepository } from "./repositories/category.repository";
+import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from 'src/users/entities/user.entity';
+import { Repository } from 'typeorm';
+import {
+  CreateRestaurantInput,
+  CreateRestaurantOutput,
+} from './dtos/create-restaurant.dto';
+import {
+  DeleteRestaurantInput,
+  DeleteRestaurantOutput,
+} from './dtos/delete-restaurant.dto';
+import {
+  EditRestaurantInput,
+  EditRestaurantOutput,
+} from './dtos/edit-restaurant.dto';
+import { Category } from './entities/cetegory.entity';
+import { Restaurant } from './entities/restaurant.entity';
+import { CategoryRepository } from './repositories/category.repository';
 
 @Injectable()
 export class RestaurantService {
@@ -15,7 +25,7 @@ export class RestaurantService {
     private readonly restaurants: Repository<Restaurant>,
     @InjectRepository(CategoryRepository)
     private readonly categories: CategoryRepository,
-  ) { }
+  ) {}
 
   async createRestaurant(
     owner: User,
@@ -44,44 +54,74 @@ export class RestaurantService {
     owner: User,
     editRestaurantInput: EditRestaurantInput,
   ): Promise<EditRestaurantOutput> {
-      try {
-        const restaurant = await this.restaurants.findOne(
-          editRestaurantInput.restaurantId,
-        );
-        if (!restaurant) {
-          return {
-            ok: false,
-            error: 'Restaurant not found',
-          };
-        }
-        if (owner.id !== restaurant.ownerId) {
-          return {
-            ok: false,
-            error: "You can't edit a restaurant that you don't own",
-          };
-        }
-        
-        let category: Category = null;
-        if (editRestaurantInput.categoryName) {
-          category = await this.categories.getOrCreate(
-            editRestaurantInput.categoryName,
-          );
-        }
-        await this.restaurants.save([
-          {
-            id: editRestaurantInput.restaurantId,
-            ...editRestaurantInput,
-            ...(category && { category }),  // category가 있으면 ...{category}
-          },
-        ]);
-        return {
-          ok: true,
-        };
-      } catch {
+    try {
+      const restaurant = await this.restaurants.findOne(
+        editRestaurantInput.restaurantId,
+      );
+      if (!restaurant) {
         return {
           ok: false,
-          error: 'Could not edit Restaurant',
+          error: 'Restaurant not found',
         };
       }
+      if (owner.id !== restaurant.ownerId) {
+        return {
+          ok: false,
+          error: "You can't edit a restaurant that you don't own",
+        };
+      }
+
+      let category: Category = null;
+      if (editRestaurantInput.categoryName) {
+        category = await this.categories.getOrCreate(
+          editRestaurantInput.categoryName,
+        );
+      }
+      await this.restaurants.save([
+        {
+          id: editRestaurantInput.restaurantId,
+          ...editRestaurantInput,
+          ...(category && { category }), // category가 있으면 ...{category}
+        },
+      ]);
+      return {
+        ok: true,
+      };
+    } catch {
+      return {
+        ok: false,
+        error: 'Could not edit Restaurant',
+      };
     }
   }
+
+  async deleteRestaurant(
+    owner: User,
+    { restaurantId }: DeleteRestaurantInput,
+  ): Promise<DeleteRestaurantOutput> {
+    try {
+      const restaurant = await this.restaurants.findOne(restaurantId);
+      if (!restaurant) {
+        return {
+          ok: false,
+          error: 'Restaurant not found',
+        };
+      }
+      if (owner.id !== restaurant.ownerId) {
+        return {
+          ok: false,
+          error: "You can't delete a restaurant that you don't own",
+        };
+      }
+      await this.restaurants.delete(restaurantId);
+      return {
+        ok: true,
+      };
+    } catch {
+      return {
+        ok: false,
+        error: 'Could not delete restaurant.',
+      };
+    }
+  }
+}
