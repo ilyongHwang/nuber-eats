@@ -7,10 +7,10 @@ import { IsBoolean, IsEnum, IsString } from "class-validator";
 import { compare, hash } from "bcrypt";
 import { Restaurant } from "src/restaurants/entities/restaurant.entity";
 
-enum UserRole {
-  Client,
-  Owner,
-  Delivery,
+export enum UserRole {
+  Client = 'CLIENT',
+  Owner = 'OWNER',
+  Delivery = 'DELIVERY',
 }
 
 // graphql 전용 enum type
