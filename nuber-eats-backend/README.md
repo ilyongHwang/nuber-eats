@@ -881,3 +881,13 @@ JWT 모듈과 같은 동적인 모듈 만드는 것을 연습해보자. 우리�
       1. owner가 restuarnt에 들어오는 order를 listen하기 위함
       2. Customer, Delivery, Owner가 특정 id의 order가 update되는걸 보기위한 거
       3. delivery guy를 위한 pickUpOrder resolver얌
+
+- #12.10 orderUpdates part One
+   - eager relationships : relationship이 필요한 entity를 쓸데 없는 정보가 불러오는걸 피하기 위해서 사용
+      - db에서 entity를 load할 때마다 자동으로 load되는 relationship을 말해
+      - 반대는 lazy.
+         - access하고 load함.
+         - promise 타입임.
+      - 하지만 조~~심히 써야함. `graphql n+1 problem`이라고 불린다.
+         - relation cycle이 돌아버려~
+         
