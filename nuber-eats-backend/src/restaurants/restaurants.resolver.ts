@@ -1,7 +1,8 @@
 import { Logger } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql';
-import { CreateRestaurantDto } from './dtos/create-restaurant.dto';
-import { UpdateRestaurantDto } from './dtos/update-restaurant.dto';
+import { AuthUser } from 'src/auth/auth-user.decorator';
+import { User } from 'src/users/entities/user.entity';
+import { CreateRestaurantInput, CreateRestaurantOutput } from './dtos/create-restaurant.dto';
 import { Restaurant } from './entities/restaurant.entity';
 import { RestaurantService } from './restaurants.service';
 
@@ -11,41 +12,14 @@ export class RestaurantResolver {
 
   constructor(private readonly restaurantService: RestaurantService) { }
 
-  @Query(returns => [Restaurant] /* graphQl 표기 */) // === (returns => boolean)
-  restaurants(): Promise<Restaurant[]> /* typescript 표기*/ {
-    return this.restaurantService.getAll();
-  }
-
-  @Mutation(returns => Boolean)
+  @Mutation(returns => CreateRestaurantOutput)
   async createRestaurant(
-    // @Args('createRestaurantInput') createRestaurantInput: createRestaurantDto,
-    @Args('input') createRestaurantDto: CreateRestaurantDto,
-  ): Promise<boolean> {
-    RestaurantResolver.logger.debug(createRestaurantDto);
-    try {
-      await this.restaurantService.createRestaurant(createRestaurantDto);
-      return true;
-    } catch (err) {
-      console.log(err);
-      return false;
-    }
-  }
-
-  @Mutation(returns => Boolean)
-  async updateRestaurant(
-    @Args('input') updateRestaurantDto: UpdateRestaurantDto
-    /*
-    @Args('id') id: number,
-    @Args('data') data: UpdateRestaurantDto,
-    */
-  ): Promise<boolean> {
-    RestaurantResolver.logger.debug(updateRestaurantDto);
-    try {
-      await this.restaurantService.updateRestaurant(updateRestaurantDto);
-      return true;
-    } catch (err) {
-      console.log(err);
-      return false;
-    }
+    @AuthUser() authUser: User,
+    @Args('input') createRestaurantInput: CreateRestaurantInput,
+  ): Promise<CreateRestaurantOutput> {
+    return this.restaurantService.createRestaurant(
+      authUser,
+      createRestaurantInput,
+    );
   }
 }
